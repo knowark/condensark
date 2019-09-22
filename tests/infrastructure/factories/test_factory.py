@@ -1,5 +1,5 @@
-from condensark.infrastructure.core import TrialConfig, Config
-from condensark.infrastructure.factories import build_factory, Factory
+from integrark.infrastructure.core import TrialConfig, Config
+from integrark.infrastructure.factories import build_factory, Factory
 
 
 def test_build_factory():

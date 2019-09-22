@@ -6,12 +6,12 @@ test:
 	pytest
 
 coverage-application: 
-	pytest -x --cov=condensark/application tests/application/ \
+	pytest -x --cov=integrark/application tests/application/ \
 	--cov-report term-missing -s
 
 coverage-infrastructure: 
-	pytest -x --cov=condensark/infrastructure tests/infrastructure/ \
+	pytest -x --cov=integrark/infrastructure tests/infrastructure/ \
 	--cov-report term-missing -s
 
 coverage: 
-	pytest -x --cov=condensark tests/ --cov-report term-missing -s
+	pytest -x --cov=integrark tests/ --cov-report term-missing -s

@@ -1,5 +1,5 @@
-import condensark
-from condensark.__main__ import main
+import integrark
+from integrark.__main__ import main
 
 
 def test_main(monkeypatch):

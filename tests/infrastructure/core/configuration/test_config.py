@@ -1,7 +1,7 @@
 import os
 import json
 from pytest import raises, fixture
-from condensark.infrastructure.core import (
+from integrark.infrastructure.core import (
     TrialConfig, DevelopmentConfig, ProductionConfig,
     load_config, build_config)
 

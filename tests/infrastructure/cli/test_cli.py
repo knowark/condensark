@@ -3,7 +3,7 @@ from typing import List
 from unittest.mock import Mock
 from argparse import ArgumentParser, Namespace
 from pytest import raises
-from condensark.infrastructure.cli import Cli
+from integrark.infrastructure.cli import Cli
 
 
 def test_cli_instantiation(cli):

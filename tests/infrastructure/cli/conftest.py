@@ -1,8 +1,8 @@
 from pytest import fixture
 from injectark import Injectark
-from condensark.infrastructure.core import Config, TrialConfig
-from condensark.infrastructure.factories import build_factory
-from condensark.infrastructure.cli import Cli
+from integrark.infrastructure.core import Config, TrialConfig
+from integrark.infrastructure.factories import build_factory
+from integrark.infrastructure.cli import Cli
 
 
 @fixture
