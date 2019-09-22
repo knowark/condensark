@@ -1,2 +1,0 @@
-# condensark
-Condensation Gateway
