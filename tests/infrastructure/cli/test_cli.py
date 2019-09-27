@@ -4,6 +4,7 @@ from unittest.mock import Mock
 from argparse import ArgumentParser, Namespace
 from pytest import raises
 from integrark.infrastructure.cli import Cli
+from integrark.infrastructure.cli import cli as cli_module
 
 
 def test_cli_instantiation(cli):
@@ -34,8 +35,25 @@ def test_cli_parse_empty_argv(cli):
 
 def test_cli_serve(cli, monkeypatch):
     called = False
+    application = None
     namespace = Namespace()
+
+    def mock_create_app(config, injector):
+        return {'Application': 'app'}
+
+    monkeypatch.setattr(
+        cli_module, 'create_app', mock_create_app)
+
+    def mock_run_app(app):
+        nonlocal called
+        called = True
+        nonlocal application
+        application = app
+
+    monkeypatch.setattr(
+        cli_module, 'run_app', mock_run_app)
 
     result = cli.serve(namespace)
 
-#     assert called
+    assert called
+    assert application == {'Application': 'app'}

@@ -9,3 +9,7 @@ def create_app(config, injector: Injectark) -> web.Application:
     create_api(app, injector)
 
     return app
+
+
+def run_app(app: web.Application, port=4321) -> None:
+    web.run_app(app, port=port)

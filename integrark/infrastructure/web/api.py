@@ -9,6 +9,5 @@ async def handle(request):
 
 
 def create_api(app: web.Application, injector: Injectark) -> None:
-
     app.add_routes([web.get('/', handle),
                     web.get('/{name}', handle)])

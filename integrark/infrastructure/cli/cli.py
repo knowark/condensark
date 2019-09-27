@@ -4,12 +4,13 @@ from argparse import ArgumentParser, Namespace
 from injectark import Injectark
 from typing import List
 from ..core import Config
+from ..web import create_app, run_app
 
 
 class Cli:
-    def __init__(self, config: Config, resolver: Injectark) -> None:
+    def __init__(self, config: Config, injector: Injectark) -> None:
         self.config = config
-        self.resolver = resolver
+        self.injector = injector
         self.parser = ArgumentParser('Integrark')
 
     def run(self, argv: List[str]):
@@ -32,3 +33,5 @@ class Cli:
 
     def serve(self, args: Namespace) -> None:
         print('...SERVE:::', args)
+        app = create_app(self.config, self.injector)
+        run_app(app)
