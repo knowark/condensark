@@ -55,6 +55,15 @@ def test_configuration_build_config_default():
     assert isinstance(config, DevelopmentConfig)
 
 
+def test_configuration_build_config_trial():
+    path = '/tmp/config.json'
+    mode = 'TEST'
+
+    config = build_config(path, mode)
+
+    assert isinstance(config, TrialConfig)
+
+
 def test_configuration_build_config_production(config_data):
     config_file, config_dict = config_data
     config_file.write_text(json.dumps(config_dict))

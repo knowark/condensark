@@ -7,6 +7,8 @@ from .config import Config, TrialConfig, DevelopmentConfig, ProductionConfig
 def build_config(config_path: str, mode: str) -> Config:
     if mode == 'DEV':
         return DevelopmentConfig()
+    elif mode == 'TEST':
+        return TrialConfig()
 
     production_config = ProductionConfig()
     loaded_config = load_config(config_path)
