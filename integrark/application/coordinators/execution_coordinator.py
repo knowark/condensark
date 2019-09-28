@@ -6,6 +6,6 @@ class ExecutionCoordinator:
         pass
 
     async def execute(self, query: str) -> Dict[str, Any]:
-        result = {}
+        result = {'data': query}
 
         return result
