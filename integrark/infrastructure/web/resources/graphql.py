@@ -1,10 +1,9 @@
 from aiohttp import web
 from aiohttp_jinja2 import template
-from .graphql import GraphqlResource
 
 
-class RootResource(web.View):
+class GraphqlResource(web.View):
 
-    @template('index.html')
+    @template('playground.html')
     async def get(self):
         return {'version': '0.1.0'}
