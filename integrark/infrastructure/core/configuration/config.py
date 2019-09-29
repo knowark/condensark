@@ -11,7 +11,12 @@ class Config(defaultdict, ABC):
     def __init__(self):
         self['mode'] = 'BASE'
         self['strategy'] = {
-
+            "QueryService": {
+                "method": "standard_query_service"
+            },
+            "ExecutionCoordinator": {
+                "method": "execution_coordinator"
+            }
         }
 
 
