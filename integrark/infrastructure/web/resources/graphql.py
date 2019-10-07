@@ -5,7 +5,7 @@ from ....application.coordinators import ExecutionCoordinator
 
 
 class GraphqlResource:
-    def __init__(self, injector: Injectark):
+    def __init__(self, injector: Injectark) -> None:
         self.execution_coordinator: ExecutionCoordinator = injector[
             'ExecutionCoordinator']
 

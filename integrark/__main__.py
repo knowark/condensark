@@ -7,8 +7,8 @@ from .infrastructure.cli import Cli
 
 
 def main():  # pragma: no cover
-    mode = os.environ.get('INSTARK_MODE', 'PROD')
-    config_path = os.environ.get('INSTARK_CONFIG', 'config.json')
+    mode = os.environ.get('INTEGRARK_MODE', 'PROD')
+    config_path = os.environ.get('INTEGRARK_CONFIG', 'config.json')
     config = build_config(config_path, mode)
 
     factory = build_factory(config)
