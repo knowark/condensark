@@ -1,3 +1,4 @@
+
 from ....application.services import QueryService, QueryResult
 
 

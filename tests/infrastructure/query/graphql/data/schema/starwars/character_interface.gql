@@ -1,0 +1,6 @@
+interface Character {
+    id: String!
+    name: String
+    friends: [Character]
+    appearsIn: [Episode]
+}

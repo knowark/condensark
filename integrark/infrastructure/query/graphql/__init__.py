@@ -1,1 +1,2 @@
-from .grapqhql_query_service import GraphqlQueryService
+from .graphql_query_service import GraphqlQueryService
+from .graphql_schema_loader import GraphqlSchemaLoader
