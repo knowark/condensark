@@ -5,7 +5,7 @@ from integrark.infrastructure.query.graphql import GraphqlSchemaLoader
 
 @fixture
 def schema_loader() -> GraphqlSchemaLoader:
-    directory = str(Path(__file__).parent / 'data/schema/starwars')
+    directory = str(Path(__file__).parent / 'data/definitions/starwars')
     return GraphqlSchemaLoader(directory)
 
 
