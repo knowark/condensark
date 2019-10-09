@@ -10,19 +10,15 @@ class GraphqlQueryService(QueryService):
 
     def __init__(self, schema_loader: GraphqlSchemaLoader,
                  solution_loader: GraphqlSolutionLoader) -> None:
-        self.schema_loader = schema_loader
-        self.solution_loader = solution_loader
+        self.schema = schema_loader.load()
+        self.solutions = solution_loader.load()
 
     async def run(self, query: str,
                   context: Dict[str, Any] = None) -> QueryResult:
 
-        schema = self.schema_loader.load()
-        solutions = self.solution_loader.load()
-        schema = self._bind_schema(schema, solutions)
+        schema = self._bind_schema(self.schema, self.solutions)
 
-        result = await graphql(schema, query, context_value=context)
-
-        return result
+        return await graphql(schema, query, context_value=context)
 
     def _bind_schema(self, schema: GraphQLSchema,
                      solutions: List[Solution]) -> GraphQLSchema:

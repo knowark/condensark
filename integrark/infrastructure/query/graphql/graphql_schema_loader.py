@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List
 from graphql import GraphQLSchema, build_schema
+from graphql.error.syntax_error import GraphQLSyntaxError
 
 
 class GraphqlSchemaLoader:
@@ -15,7 +16,11 @@ class GraphqlSchemaLoader:
                 f"**/*.{extension}"))
 
         content = self._join_graphql_files(graphql_files)
-        schema = build_schema(content)
+
+        schema = None
+
+        if content:
+            schema = build_schema(content)
 
         return schema
 

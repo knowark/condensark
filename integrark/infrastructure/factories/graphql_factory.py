@@ -14,9 +14,9 @@ class GraphqlFactory(MemoryFactory):
         return GraphqlQueryService(schema_loader, solution_loader)
 
     def graphql_schema_loader(self) -> GraphqlSchemaLoader:
-        schema_directory = self.config['schema_directory']
-        return GraphqlSchemaLoader(schema_directory)
+        definitions_directory = self.config['schema_definitions_directory']
+        return GraphqlSchemaLoader(definitions_directory)
 
     def graphql_solution_loader(self) -> GraphqlSolutionLoader:
-        solution_directory = self.config['solution_directory']
-        return GraphqlSolutionLoader(solution_directory)
+        solutions_directory = self.config['schema_solutions_directory']
+        return GraphqlSolutionLoader(solutions_directory)

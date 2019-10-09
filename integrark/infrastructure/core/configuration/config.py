@@ -18,8 +18,8 @@ class Config(defaultdict, ABC):
                 "method": "execution_coordinator"
             }
         }
-        self['schema_directory'] = 'schema'
-        self['solution_directory'] = 'solution'
+        self['schema_definitions_directory'] = 'schema'
+        self['schema_solutions_directory'] = 'schema'
 
 
 class TrialConfig(Config):
