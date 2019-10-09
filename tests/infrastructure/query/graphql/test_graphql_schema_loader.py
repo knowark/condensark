@@ -9,7 +9,7 @@ def schema_loader() -> GraphqlSchemaLoader:
     return GraphqlSchemaLoader(directory)
 
 
-def test_graphql_query_service_load(
+def test_graphql_schema_loader_load(
         schema_loader: GraphqlSchemaLoader):
     schema = schema_loader.load()
     assert list(schema.get_type('Human').fields.keys()) == [
