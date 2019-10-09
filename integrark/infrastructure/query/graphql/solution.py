@@ -9,14 +9,7 @@ class Resolver(Protocol):
 
 
 class Solution:
-
-    def __init__(self, config: Dict[str, Any]) -> None:
-        self.config = config
-        self._type = 'Query'
-
-    @property
-    def type(self) -> str:
-        return self._type
+    type = 'Query'
 
     def resolve(self, field: str) -> Resolver:
         return cast(Resolver, self._default_resolver)

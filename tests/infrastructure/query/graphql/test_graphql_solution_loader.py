@@ -12,7 +12,7 @@ def solution_loader() -> GraphqlSolutionLoader:
     return GraphqlSolutionLoader(directory)
 
 
-def test_graphql_solution_loader_load(
+async def test_graphql_solution_loader_load(
         solution_loader: GraphqlSolutionLoader):
 
     config: Dict[str, Any] = {
@@ -22,11 +22,19 @@ def test_graphql_solution_loader_load(
         }
     }
 
-    solutions = solution_loader.load(config)
+    solutions = solution_loader.load()
 
     query_solution = next(solution for solution in solutions
                           if solution.type == 'Query')
 
     hero_resolver = query_solution.resolve('hero')
 
-    assert hero_resolver(None, None, 1)['name'] == 'R2-D2'
+    class Info:
+        context = {
+            'data': {
+                'human_data': human_data,
+                'droid_data': droid_data
+            }
+        }
+
+    assert (await hero_resolver(None, Info(), 1))['name'] == 'R2-D2'

@@ -1,0 +1,2 @@
+
+MYVAR = 'HELLO VAR'

@@ -25,4 +25,4 @@ async def test_graphql_post(app) -> None:
     content = await response.text()
 
     assert response.status == 200
-    assert '{}' in await response.text()
+    assert "[null, null]" in await response.text()
