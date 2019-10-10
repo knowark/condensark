@@ -38,3 +38,14 @@ async def test_graphql_solution_loader_load(
         }
 
     assert (await hero_resolver(None, Info(), 1))['name'] == 'R2-D2'
+
+
+async def test_graphql_solution_loader_load_nonpackage(
+        solution_loader: GraphqlSolutionLoader):
+
+    directory = str(Path(__file__).parent / 'data/solutions/nonpackage')
+    solution_loader.path = directory
+
+    solutions = solution_loader.load()
+
+    assert solutions == []
