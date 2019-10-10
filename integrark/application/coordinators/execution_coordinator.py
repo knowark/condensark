@@ -7,8 +7,16 @@ class ExecutionCoordinator:
         self.query_service = query_service
 
     async def execute(self, query: str,
-                      context: Dict[str, Any] = None) -> QueryResult:
+                      context: Dict[str, Any] = None) -> Dict[str, Any]:
 
         result = await self.query_service.run(query, context)
 
-        return result
+        response: Dict[str, Any] = {}
+
+        if result.errors:
+            response['errors'] = result.errors
+
+        if result.data:
+            response['data'] = result.data
+
+        return response

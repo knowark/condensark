@@ -46,7 +46,15 @@ class ProductionConfig(Config):
     def __init__(self):
         super().__init__()
         self["mode"] = 'PROD'
-        self['factory'] = 'MemoryFactory'
+        self['factory'] = 'GraphqlFactory'
         self["strategy"].update({
-
+            "QueryService": {
+                "method": "graphql_query_service"
+            },
+            "GraphqlSchemaLoader": {
+                "method": "graphql_schema_loader"
+            },
+            "GraphqlSolutionLoader": {
+                "method": "graphql_solution_loader"
+            }
         })

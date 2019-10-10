@@ -15,3 +15,6 @@ coverage-infrastructure:
 
 coverage: 
 	pytest -x --cov=integrark tests/ --cov-report term-missing -s
+
+serve:
+	python -m integrark serve
