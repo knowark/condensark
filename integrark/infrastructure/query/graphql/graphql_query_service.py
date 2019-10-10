@@ -18,12 +18,18 @@ class GraphqlQueryService(QueryService):
 
         schema = self._bind_schema(self.schema, self.solutions)
 
-        graphql_result = await graphql(schema, query, context_value=context)
+        graphql_result = await graphql(
+            schema, query, context_value=context)
 
         data = graphql_result.data
-        errors: List[Dict[str, Any]] = []
+        errors = self._normalize_errors(graphql_result.errors) or None
 
-        for graphql_error in graphql_result.errors or []:
+        return QueryResult(data, errors)
+
+    def _normalize_errors(self, graphql_errors: List[Any]
+                          ) -> List[Dict[str, Any]]:
+        errors: List[Dict[str, Any]] = []
+        for graphql_error in graphql_errors or []:
             error: Dict[str, Any] = {'message': graphql_error.message}
 
             if graphql_error.locations:
@@ -32,9 +38,10 @@ class GraphqlQueryService(QueryService):
                     for location in graphql_error.locations]
             if graphql_error.path:
                 error['path'] = [item for item in graphql_error.path]
+
             errors.append(error)
 
-        return QueryResult(data, errors)
+        return errors
 
     def _bind_schema(self, schema: GraphQLSchema,
                      solutions: List[Solution]) -> GraphQLSchema:

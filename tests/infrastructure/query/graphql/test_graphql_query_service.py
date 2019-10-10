@@ -18,6 +18,7 @@ def schema_loader() -> GraphqlSchemaLoader:
 
             type Query {
                 doctors: [Doctor]
+                veterinary: Doctor
             }
             """
             return build_schema(content)
@@ -39,6 +40,9 @@ def solution_loader() -> GraphqlSolutionLoader:
                 {'name': 'Paco', 'specialty': 'Psychiatry'},
                 {'name': 'Luis', 'specialty': 'Oncology'}
             ]
+
+        async def resolve__veterinary(self, parent, info):
+            raise Exception('The veterinary field has not been implemented.')
 
     class MockGraphqlSolutionLoader(GraphqlSolutionLoader):
         def load(self):
@@ -135,3 +139,53 @@ async def test_graphql_query_service_bind_schema(
     result = await graphql(schema, query)
 
     assert result.data['students'] == students
+    assert result.errors is None
+
+
+async def test_graphql_query_service_run_location_errors(query_service):
+    query = """
+    {
+        doctors {
+            name
+            address
+        }
+    }
+    """
+
+    result = await query_service.run(query)
+
+    assert result.data is None
+    assert result.errors == [
+        {'message': "Cannot query field 'address' on type 'Doctor'.",
+         'locations': [{'line': 5, 'column': 13}]}
+    ]
+
+
+async def test_graphql_query_service_run_path_errors(query_service):
+    query = """
+    {
+        doctors {
+            name
+        }
+        veterinary {
+            name
+        }
+    }
+    """
+
+    result = await query_service.run(query)
+
+    assert result.data == {
+        'doctors': [
+            {'name': 'Hugo'},
+            {'name': 'Paco'},
+            {'name': 'Luis'}
+        ],
+        'veterinary': None
+    }
+
+    assert result.errors == [
+        {'message': 'The veterinary field has not been implemented.',
+         'locations': [{'line': 6, 'column': 9}],
+         'path': ['veterinary']}
+    ]

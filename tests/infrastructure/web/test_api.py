@@ -20,9 +20,9 @@ async def test_graphql_get(app) -> None:
 
 
 async def test_graphql_post(app) -> None:
-    response = await app.post('/graphql', data='{query{hero}}')
+    response = await app.post('/graphql', data='{}')
 
     content = await response.text()
 
     assert response.status == 200
-    assert "[null, null]" in await response.text()
+    assert "{}" in await response.text()
