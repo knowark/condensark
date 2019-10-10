@@ -21,8 +21,6 @@ class GraphqlQueryService(QueryService):
         graphql_result = await graphql(
             schema, query, context_value=context)
 
-        print('RESULT>>>>', graphql_result)
-
         data = graphql_result.data
         errors = self._normalize_errors(graphql_result.errors) or None
 
