@@ -15,7 +15,8 @@ class GraphqlSchemaLoader:
             graphql_files.extend(Path(self.directory).glob(
                 f"**/*.{extension}"))
 
-        content = self._join_graphql_files(graphql_files)
+        content = self._get_builtin_directives()
+        content += self._join_graphql_files(graphql_files)
 
         schema = None
 
@@ -23,6 +24,13 @@ class GraphqlSchemaLoader:
             schema = build_schema(content)
 
         return schema
+
+    def _get_builtin_directives(self):
+        return """
+
+        directive @auth(roles: [String]) on FIELD_DEFINITION
+
+        """
 
     def _join_graphql_files(self, graphql_files: List[Path]) -> str:
         joined_content = ""
