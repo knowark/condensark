@@ -10,12 +10,16 @@ class GraphqlSchemaLoader:
         self.extensions = ['gql', 'graphql']
 
     def load(self) -> GraphQLSchema:
+        content = self._get_builtin_directives()
+        path = Path(self.directory)
+        if not path.exists():
+            return content
+
         graphql_files: List[Path] = []
         for extension in self.extensions:
-            graphql_files.extend(Path(self.directory).glob(
+            graphql_files.extend(path.glob(
                 f"**/*.{extension}"))
 
-        content = self._get_builtin_directives()
         content += self._join_graphql_files(graphql_files)
 
         schema = None

@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from graphql import GraphQLSchema, graphql
+from graphql import GraphQLSchema, graphql, format_error
 from ....application.services import QueryService, QueryResult
 from .graphql_schema_loader import GraphqlSchemaLoader
 from .graphql_solution_loader import GraphqlSolutionLoader
@@ -12,36 +12,19 @@ class GraphqlQueryService(QueryService):
                  solution_loader: GraphqlSolutionLoader) -> None:
         self.schema = schema_loader.load()
         self.solutions = solution_loader.load()
+        self.schema = self._bind_schema(self.schema, self.solutions)
 
     async def run(self, query: str,
                   context: Dict[str, Any] = None) -> QueryResult:
 
-        schema = self._bind_schema(self.schema, self.solutions)
-
         graphql_result = await graphql(
-            schema, query, context_value=context)
+            self.schema, query, context_value=context)
 
         data = graphql_result.data
-        errors = self._normalize_errors(graphql_result.errors) or None
+        errors = graphql_result.errors if graphql_result.errors is None else [
+            format_error(error) for error in graphql_result.errors]
 
         return QueryResult(data, errors)
-
-    def _normalize_errors(self, graphql_errors: List[Any]
-                          ) -> List[Dict[str, Any]]:
-        errors: List[Dict[str, Any]] = []
-        for graphql_error in graphql_errors or []:
-            error: Dict[str, Any] = {'message': graphql_error.message}
-
-            if graphql_error.locations:
-                error['locations'] = [
-                    {'line': location.line, 'column': location.column}
-                    for location in graphql_error.locations]
-            if graphql_error.path:
-                error['path'] = [item for item in graphql_error.path]
-
-            errors.append(error)
-
-        return errors
 
     def _bind_schema(self, schema: GraphQLSchema,
                      solutions: List[Solution]) -> GraphQLSchema:
