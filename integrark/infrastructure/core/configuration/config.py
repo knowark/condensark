@@ -19,7 +19,7 @@ class Config(defaultdict, ABC):
             }
         }
         self['schema_definitions_directory'] = 'schema/definitions'
-        self['schema_solutions_directory'] = 'schema/solutions'
+        self['schema_solutions_directory'] = 'schema/solutions/default'
 
 
 class TrialConfig(Config):
