@@ -6,6 +6,8 @@ clean:
 test:
 	pytest
 
+PROJECT = integrark
+
 coverage-application: 
 	pytest -x --cov=integrark/application tests/application/ \
 	--cov-report term-missing -s
@@ -19,3 +21,8 @@ coverage:
 
 serve:
 	python -m integrark serve
+
+PART ?= patch
+
+version:
+	bump2version $(PART) $(PROJECT)/__init__.py --tag --commit

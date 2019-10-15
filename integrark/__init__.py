@@ -1,2 +1,1 @@
-
-MYVAR = 'HELLO VAR'
+__version__ = '0.1.0'
