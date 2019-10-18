@@ -52,3 +52,23 @@ async def test_dataloader_load():
 
     assert result_1 == {'id': '1', 'value': f'Response: 1'}
     assert result_2 == {'id': '2', 'value': f'Response: 2'}
+
+
+async def test_dataloader_load_many():
+    dataloader = standard_dataloader()
+
+    future_list = dataloader.load_many(['1', '2'])
+
+    assert len(dataloader.queue) == 2
+    assert future_list.done() is False
+
+    await sleep(0.01)
+
+    assert len(dataloader.queue) == 0
+    assert future_list.done() is True
+
+    result_list = await future_list
+
+    assert result_list == [
+        {'id': '1', 'value': f'Response: 1'},
+        {'id': '2', 'value': f'Response: 2'}]

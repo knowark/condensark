@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from asyncio import Future, get_event_loop, ensure_future
+from asyncio import Future, get_event_loop, ensure_future, gather
 from typing import Union, List, Callable, Any, NamedTuple, Awaitable
 
 
@@ -17,6 +17,9 @@ class DataLoader(ABC):
         if len(self.queue) == 1:
             self._schedule_dispatch()
         return future
+
+    def load_many(self, ids: List[str]) -> Awaitable[List[Any]]:
+        return gather(*[self.load(id) for id in ids])
 
     @abstractmethod
     async def fetch(self, ids: List[str]) -> List[Any]:
