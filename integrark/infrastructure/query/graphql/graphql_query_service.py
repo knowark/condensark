@@ -16,12 +16,12 @@ class GraphqlQueryService(QueryService):
 
     async def run(self, query: str,
                   context: Dict[str, Any] = None) -> QueryResult:
-
         context = context or {}
+        context.update({
+            'dataloaders': self.dataloaders
+        })
         graphql_result = await graphql(
-            self.schema, query, context_value=context.update({
-                'dataloaders': self.dataloaders
-            }))
+            self.schema, query, context_value=context)
 
         data = graphql_result.data
         errors = graphql_result.errors if graphql_result.errors is None else [

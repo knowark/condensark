@@ -42,4 +42,4 @@ class GraphqlSolutionLoader:
             self, package: ModuleType) -> Dict[str, DataLoader]:
         return {
             dataloader_class.__name__: dataloader_class()
-            for solution_class in getattr(package, 'DATALOADERS', [])}
+            for dataloader_class in getattr(package, 'DATALOADERS', [])}
