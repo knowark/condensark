@@ -3,7 +3,7 @@
     in external Solution packages.
 """
 
-from ..infrastructure.query import (
+from ..infrastructure.query.graphql import (
     Solution,
     DataLoader,
     StandardDataLoader)
