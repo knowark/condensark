@@ -48,7 +48,7 @@ def solution_loader() -> GraphqlSolutionLoader:
 
     class MockGraphqlSolutionLoader(GraphqlSolutionLoader):
         def load(self):
-            return [MockSolution()]
+            return [MockSolution()], {}
 
     return MockGraphqlSolutionLoader('/tmp/fake')
 
@@ -98,7 +98,7 @@ def solutions(students):
     ]
 
 
-def xtest_graphql_query_service(query_service):
+def test_graphql_query_service(query_service):
     assert issubclass(GraphqlQueryService, QueryService)
     assert isinstance(query_service, GraphqlQueryService)
 
@@ -124,7 +124,7 @@ async def test_graphql_query_service_run(query_service):
     assert result.errors is None
 
 
-async def xtest_graphql_query_service_bind_schema(
+async def test_graphql_query_service_bind_schema(
         query_service, schema, solutions, students):
 
     schema = query_service._bind_schema(schema, solutions)
@@ -144,7 +144,7 @@ async def xtest_graphql_query_service_bind_schema(
     assert result.errors is None
 
 
-async def xtest_graphql_query_service_run_location_errors(query_service):
+async def test_graphql_query_service_run_location_errors(query_service):
     query = """
     {
         doctors {
@@ -159,11 +159,10 @@ async def xtest_graphql_query_service_run_location_errors(query_service):
     assert result.data is None
     assert result.errors == [
         {'message': "Cannot query field 'address' on type 'Doctor'.",
-         'locations': [{'line': 5, 'column': 13}]}
-    ]
+         'locations': [{'line': 5, 'column': 13}], 'path': None}]
 
 
-async def xtest_graphql_query_service_run_path_errors(query_service):
+async def test_graphql_query_service_run_path_errors(query_service):
     query = """
     {
         doctors {

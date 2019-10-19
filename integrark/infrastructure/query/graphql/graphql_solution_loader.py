@@ -1,9 +1,11 @@
 import sys
 from pathlib import Path
-from typing import List, Any, Dict
+from types import ModuleType
+from typing import List, Tuple, Dict, Any
 from importlib.util import spec_from_file_location, module_from_spec
 from graphql import GraphQLSchema, build_schema
 from .solution import Solution
+from .dataloader import DataLoader
 
 
 class GraphqlSolutionLoader:
@@ -11,11 +13,13 @@ class GraphqlSolutionLoader:
         self.path = directory
         self.extension = 'py'
 
-    def load(self) -> List[Solution]:
-        solutions = self._load_solutions_from_package(Path(self.path)) or []
-        return sorted(solutions, key=lambda s: s.type)
+    def load(self) -> Tuple[List[Solution], Dict[str, DataLoader]]:
+        package = self._load_package(Path(self.path))
+        solutions = self._load_solutions_from_package(package) or []
+        dataloaders = self._load_dataloaders_from_package(package) or {}
+        return (sorted(solutions, key=lambda s: s.type), dataloaders)
 
-    def _load_solutions_from_package(self, path: Path) -> List[Solution]:
+    def _load_package(self, path: Path) -> ModuleType:
         package_init = path / '__init__.py'
         if not package_init.exists():
             return None
@@ -26,5 +30,16 @@ class GraphqlSolutionLoader:
         sys.modules[spec.name] = package
         spec.loader.exec_module(package)
 
-        return [solution_class() for solution_class in
-                getattr(package, 'SOLUTIONS', [])]
+        return package
+
+    def _load_solutions_from_package(
+            self, package: ModuleType) -> List[Solution]:
+        return [
+            solution_class() for solution_class in
+            getattr(package, 'SOLUTIONS', [])]
+
+    def _load_dataloaders_from_package(
+            self, package: ModuleType) -> Dict[str, DataLoader]:
+        return {
+            dataloader_class.__name__: dataloader_class()
+            for solution_class in getattr(package, 'DATALOADERS', [])}

@@ -2,7 +2,8 @@ from pathlib import Path
 from typing import Dict, Any
 from pytest import fixture, raises
 from graphql.type import GraphQLResolveInfo
-from integrark.infrastructure.query.graphql import GraphqlSolutionLoader
+from integrark.infrastructure.query.graphql import (
+    GraphqlSolutionLoader, DataLoader)
 from .sample_data import human_data, droid_data
 
 
@@ -22,7 +23,7 @@ async def test_graphql_solution_loader_load(
         }
     }
 
-    solutions = solution_loader.load()
+    solutions, dataloaders = solution_loader.load()
 
     query_solution = next(solution for solution in solutions
                           if solution.type == 'Query')
@@ -38,6 +39,8 @@ async def test_graphql_solution_loader_load(
         }
 
     assert (await hero_resolver(None, Info(), 1))['name'] == 'R2-D2'
+    for name, loader in dataloaders:
+        assert isinstance(loader, DataLoader)
 
 
 async def test_graphql_solution_loader_load_nonpackage(
@@ -48,4 +51,4 @@ async def test_graphql_solution_loader_load_nonpackage(
 
     solutions = solution_loader.load()
 
-    assert solutions == []
+    assert solutions == ([], {})
