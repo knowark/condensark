@@ -32,7 +32,7 @@ class GraphqlSchemaLoader:
     def _get_builtin_directives(self):
         return """
 
-        directive @auth(roles: [String]) on FIELD_DEFINITION
+        directive @auth(roles: [String]) on FIELD_DEFINITION | FIELD
 
         """
 
