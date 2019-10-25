@@ -72,3 +72,31 @@ async def test_dataloader_load_many():
     assert result_list == [
         {'id': '1', 'value': f'Response: 1'},
         {'id': '2', 'value': f'Response: 2'}]
+
+
+async def test_dataloader_cache():
+    dataloader = standard_dataloader()
+
+    future_1 = dataloader.load('1')
+    future_2 = dataloader.load('2')
+    future_3 = dataloader.load('1')
+
+    assert len(dataloader.queue) == 2
+    assert future_1.done() is False
+    assert future_2.done() is False
+    assert future_3.done() is False
+
+    await sleep(0.01)
+
+    assert len(dataloader.queue) == 0
+    assert future_1.done() is True
+    assert future_2.done() is True
+    assert future_3.done() is True
+
+    result_1 = await future_1
+    result_2 = await future_2
+    result_3 = await future_3
+
+    assert result_1 == {'id': '1', 'value': f'Response: 1'}
+    assert result_2 == {'id': '2', 'value': f'Response: 2'}
+    assert result_3 == result_1

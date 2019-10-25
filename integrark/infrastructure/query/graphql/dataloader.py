@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from asyncio import Future, get_event_loop, ensure_future, gather
-from typing import Union, List, Callable, Any, NamedTuple, Awaitable
+from typing import Union, List, Dict, Callable, Any, NamedTuple, Awaitable
 
 
 FetchFunction = Callable[[List[str]], Awaitable[List[Any]]]
@@ -10,9 +10,16 @@ class DataLoader(ABC):
     def __init__(self):
         self.loop = get_event_loop()
         self.queue: List[Loader] = []
+        self.cache: Dict[str, Any] = {}
 
     def load(self, id: str) -> Awaitable[Any]:
+        cached_result = self.cache.get(id)
+        if cached_result is not None:
+            return cached_result
+
         future = self.loop.create_future()
+        self.cache[id] = future
+
         self.queue.append(Loader(id, future))
         if len(self.queue) == 1:
             self._schedule_dispatch()
