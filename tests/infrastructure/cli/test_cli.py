@@ -40,17 +40,18 @@ def test_cli_serve(cli, monkeypatch):
     namespace = Namespace()
 
     def mock_create_app(config, injector):
-        nonlocal port
-        port = config.get('port')
+
         return {'Application': 'app'}
 
     monkeypatch.setattr(
         cli_module, 'create_app', mock_create_app)
 
-    def mock_run_app(app):
+    def mock_run_app(app, port_):
         nonlocal called
-        called = True
+        nonlocal port
         nonlocal application
+        called = True
+        port = port_
         application = app
 
     monkeypatch.setattr(
