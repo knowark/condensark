@@ -10,6 +10,7 @@ class Config(defaultdict, ABC):
     @abstractmethod
     def __init__(self):
         self['mode'] = 'BASE'
+        self['port'] = 8765
         self['strategy'] = {
             "QueryService": {
                 "method": "standard_query_service"

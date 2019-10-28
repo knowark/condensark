@@ -15,7 +15,7 @@ class Cli:
 
     def run(self, argv: List[str]):
         args = self.parse(argv)
-        args.func(argv)
+        args.func(args)
 
     def parse(self, argv: List[str]) -> Namespace:
         subparsers = self.parser.add_subparsers()
@@ -23,6 +23,7 @@ class Cli:
         # Serve
         serve_parser = subparsers.add_parser(
             'serve', help='Start HTTP server.')
+        serve_parser.add_argument('-p', '--port')
         serve_parser.set_defaults(func=self.serve)
 
         if len(argv) == 0:
@@ -33,5 +34,6 @@ class Cli:
 
     def serve(self, args: Namespace) -> None:
         print('...SERVE:::', args)
+        port = args.port or self.config['port']
         app = create_app(self.config, self.injector)
-        run_app(app)
+        run_app(app, port)

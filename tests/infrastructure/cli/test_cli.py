@@ -36,9 +36,12 @@ def test_cli_parse_empty_argv(cli):
 def test_cli_serve(cli, monkeypatch):
     called = False
     application = None
+    port = None
     namespace = Namespace()
 
     def mock_create_app(config, injector):
+        nonlocal port
+        port = config.get('port')
         return {'Application': 'app'}
 
     monkeypatch.setattr(
@@ -53,7 +56,10 @@ def test_cli_serve(cli, monkeypatch):
     monkeypatch.setattr(
         cli_module, 'run_app', mock_run_app)
 
+    namespace.port = 7777
+
     result = cli.serve(namespace)
 
     assert called
     assert application == {'Application': 'app'}
+    assert port == 7777
