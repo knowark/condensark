@@ -15,3 +15,4 @@ def bind_routes(app: web.Application, path: str, resource: Any):
         handler = getattr(resource, method, None)
         if handler:
             app.router.add_route(method, path, handler)
+

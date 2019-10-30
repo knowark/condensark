@@ -17,6 +17,7 @@ class GraphqlResource:
         return {'version': '0.1.0'}
 
     async def post(self, request):
+        print('REQU:::', request)
         context = self.context
         payload = await request.json()
         operation = payload.get('operationName', '')
@@ -24,5 +25,7 @@ class GraphqlResource:
         query = payload.get('query', '')
 
         result = await self.execution_coordinator.execute(query, context)
+
+        print('RESULT>>>', result, 'payload>>>>', payload)
 
         return web.json_response(result)
