@@ -7,3 +7,6 @@ from ..infrastructure.query.graphql import (
     Solution,
     DataLoader,
     StandardDataLoader)
+from ..infrastructure.query.utilities import (
+    parse_domain
+)
