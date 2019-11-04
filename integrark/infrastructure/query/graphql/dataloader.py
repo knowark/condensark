@@ -42,7 +42,10 @@ class DataLoader(ABC):
         ids = [item.id for item in queue]
         values = await self.fetch(ids)
         for item, value in zip(queue, values):
-            item.future.set_result(value)
+            if isinstance(value, Exception):
+                item.future.set_exception(value)
+            else:
+                item.future.set_result(value)
 
 
 class StandardDataLoader(DataLoader):

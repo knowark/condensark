@@ -100,3 +100,34 @@ async def test_dataloader_cache():
     assert result_1 == {'id': '1', 'value': f'Response: 1'}
     assert result_2 == {'id': '2', 'value': f'Response: 2'}
     assert result_3 == result_1
+
+
+async def test_dataloader_load_exception():
+    async def dummy_fetch(ids: List[str]) -> List[Any]:
+        return [
+            {'id': '1', 'value': 'Response: 1'},
+            Exception('Error at retrieving id: <2>')
+        ]
+
+    dataloader = StandardDataLoader(dummy_fetch)
+
+    future_1 = dataloader.load('1')
+    future_2 = dataloader.load('2')
+
+    assert len(dataloader.queue) == 2
+    assert future_1.done() is False
+    assert future_2.done() is False
+
+    await sleep(0.01)
+
+    assert len(dataloader.queue) == 0
+    assert future_1.done() is True
+    assert future_2.done() is True
+
+    result_1 = await future_1
+
+    with raises(Exception) as execinfo:
+        result_2 = await future_2
+        assert str(execinfo.value) == 'Error at retrieving id: <2>'
+
+    assert result_1 == {'id': '1', 'value': f'Response: 1'}
