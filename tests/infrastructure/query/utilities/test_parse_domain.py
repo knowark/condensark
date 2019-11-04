@@ -16,3 +16,14 @@ def test_parse_domain_wrong_json():
 
     with raises(json.JSONDecodeError):
         domain = parse_domain(filter)
+
+
+def test_parse_domain_alias():
+    filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
+              '["mainPhone", "=", "123456"]]')
+
+    alias = {'siteId': 'site_id', 'mainPhone': 'main_phone'}
+    domain = parse_domain(filter, alias)
+
+    assert domain == [["id", "=", "001"], ["site_id", "=", "003"],
+                      ["main_phone", "=", "123456"]]
