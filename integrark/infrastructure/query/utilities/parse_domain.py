@@ -13,7 +13,7 @@ def parse_domain(filter: str, alias: Dict[str, str] = None,
             if snake:
                 word = camel_to_snake(word)
             if alias:
-                word = alias.get(word) or word
+                word = alias.get(item[0]) or word
             item[0] = word
 
     return domain
