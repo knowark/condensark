@@ -27,3 +27,13 @@ def test_parse_domain_alias():
 
     assert domain == [["id", "=", "001"], ["site_id", "=", "003"],
                       ["main_phone", "=", "123456"]]
+
+
+def test_parse_domain_default_snake_case():
+    filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
+              '["mainPhone", "=", "123456"]]')
+
+    domain = parse_domain(filter, snake=True)
+
+    assert domain == [["id", "=", "001"], ["site_id", "=", "003"],
+                      ["main_phone", "=", "123456"]]
