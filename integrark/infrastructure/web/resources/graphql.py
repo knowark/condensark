@@ -19,7 +19,10 @@ class GraphqlResource:
 
         context = {
             'graphql': {
-                'context_value': {'injector': self.injector},
+                'context_value': {
+                    'injector': self.injector,
+                    'request': request
+                },
                 'variable_values': payload.get('variables'),
                 'operation_name': payload.get('operationName')
             }
