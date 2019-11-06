@@ -17,6 +17,9 @@ class Config(defaultdict, ABC):
             },
             "ExecutionCoordinator": {
                 "method": "execution_coordinator"
+            },
+            "JwtSupplier": {
+                "method": "jwt_supplier"
             }
         }
         self['schema_definitions_directory'] = 'schema/definitions'

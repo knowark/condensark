@@ -1,9 +1,7 @@
-from pathlib import Path
 from ..core import Config
 from .memory_factory import MemoryFactory
 from ..query import GraphqlQueryService
 from ..query.graphql import GraphqlSchemaLoader, GraphqlSolutionLoader
-from ..core import JwtSupplier
 
 
 class GraphqlFactory(MemoryFactory):
@@ -22,10 +20,3 @@ class GraphqlFactory(MemoryFactory):
     def graphql_solution_loader(self) -> GraphqlSolutionLoader:
         solutions_directory = self.config['schema_solutions_directory']
         return GraphqlSolutionLoader(solutions_directory)
-
-    def jwt_supplier(self) -> JwtSupplier:
-        secret_file = Path(self.config.get('secrets', {}).get('jwt', ''))
-        secret = (secret_file.read_text().strip()
-                  if secret_file.is_file() else 'INTEGRARK_SECRET')
-
-        return JwtSupplier(secret)

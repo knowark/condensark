@@ -22,6 +22,9 @@ def mock_strategy():
         },
         "ExecutionCoordinator": {
             "method": "execution_coordinator"
+        },
+        "JwtSupplier": {
+            "method": "jwt_supplier"
         }
     }
 

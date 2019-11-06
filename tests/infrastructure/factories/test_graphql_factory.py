@@ -26,9 +26,6 @@ def mock_strategy():
         },
         "GraphqlSolutionLoader": {
             "method": "graphql_solution_loader"
-        },
-        "JwtSupplier": {
-            "method": "jwt_supplier"
         }
     }
 

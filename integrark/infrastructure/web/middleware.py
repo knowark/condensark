@@ -1,18 +1,35 @@
-from typing import Dict, Callable, Any
+from typing import Dict, List, Callable, Any
 from aiohttp import web
+from jwt import PyJWTError
+from injectark import Injectark
 
 
-@web.middleware
-async def user_middleware(
-        request: web.Request, handler: Callable) -> web.Response:
+def user_middleware_factory(injector: Injectark) -> Callable:
 
-    request['user'] = extract_user(request)
+    jwt_supplier = injector['JwtSupplier']
 
-    response = await handler(request)
-    return response
+    @web.middleware
+    async def user_middleware(
+            request: web.Request, handler: Callable) -> web.Response:
+
+        authorization = request.headers.get('Authorization', "")
+        token = authorization.replace('Bearer ', '')
+
+        try:
+            token_payload = jwt_supplier.decode(token)
+        except PyJWTError:
+            token_payload = {}
+
+        request['user'] = extract_user(request)
+
+        response = await handler(request)
+
+        return response
+
+    return user_middleware
 
 
-def extract_user(request: web.Response) -> Dict[str, Any]:
+def extract_user(payload: Dict[str, Any]) -> Dict[str, Any]:
     user = {
         'tid': '',
         'uid': '',
@@ -21,9 +38,11 @@ def extract_user(request: web.Response) -> Dict[str, Any]:
         'attributes': {},
         'authorization': {}
     }
+    user.update(payload)
     return user
 
 
-MIDDLEWARES = [
-    user_middleware
-]
+def middlewares(injector: Injectark) -> List[Callable]:
+    return [
+        user_middleware_factory(injector)
+    ]
