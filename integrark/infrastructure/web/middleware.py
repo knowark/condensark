@@ -20,7 +20,7 @@ def user_middleware_factory(injector: Injectark) -> Callable:
         except PyJWTError:
             token_payload = {}
 
-        request['user'] = extract_user(request)
+        request['user'] = extract_user(token_payload)
 
         response = await handler(request)
 
