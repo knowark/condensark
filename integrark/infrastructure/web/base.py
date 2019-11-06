@@ -9,6 +9,7 @@ from .middleware import MIDDLEWARES
 
 
 def create_app(config, injector: Injectark) -> web.Application:
+
     app = web.Application(middlewares=MIDDLEWARES)
     templates = str(Path(__file__).parent / 'templates')
     setup(app, loader=FileSystemLoader(templates))

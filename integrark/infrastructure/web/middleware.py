@@ -1,10 +1,10 @@
-from typing import Dict, Awaitable, Any
+from typing import Dict, Callable, Any
 from aiohttp import web
 
 
 @web.middleware
 async def user_middleware(
-        request: web.Request, handler: Awaitable) -> web.Response:
+        request: web.Request, handler: Callable) -> web.Response:
 
     request['user'] = extract_user(request)
 
