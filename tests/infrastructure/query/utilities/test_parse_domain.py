@@ -1,6 +1,6 @@
 import json
 from pytest import fixture, raises
-from integrark.infrastructure.query import parse_domain
+from integrark.infrastructure.query import parse_domain, join_domains
 
 
 def test_parse_domain():
@@ -37,3 +37,37 @@ def test_parse_domain_default_snake_case():
 
     assert domain == [["id", "=", "001"], ["site_id", "=", "003"],
                       ["main_phone", "=", "123456"]]
+
+
+def test_join_domains_and():
+    filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
+              '["mainPhone", "=", "123456"]]')
+
+    domains = [
+        ["id", "=", "001"],
+        ["site_id", "=", "003"],
+    ]
+
+    or_joined_domains = join_domains(domains)
+
+    assert or_joined_domains == [
+        '|',
+        ["id", "=", "001"],
+        ["site_id", "=", "003"],
+    ]
+
+    domains = [
+        ["id", "=", "001"],
+        ["site_id", "=", "003"],
+        ["main_phone", "=", "123456"]
+    ]
+
+    or_joined_domains = join_domains(domains)
+
+    assert or_joined_domains == [
+        '|',
+        '|',
+        ["id", "=", "001"],
+        ["site_id", "=", "003"],
+        ["main_phone", "=", "123456"]
+    ]
