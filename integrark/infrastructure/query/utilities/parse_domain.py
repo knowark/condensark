@@ -20,8 +20,16 @@ def parse_domain(filter: str, alias: Dict[str, str] = None,
 
 
 def join_domains(domains: List[List[Any]], symbol='|') -> List[Any]:
-    or_list = [symbol for item in range(len(domains) - 1)]
-    return or_list + domains
+    if not domains:
+        return []
+
+    or_list = []
+    for item in domains[:-1]:
+        or_list.append(symbol)
+        or_list.append(item)
+    or_list.append(domains[-1])
+
+    return or_list
 
 
 def camel_to_snake(word: str) -> str:

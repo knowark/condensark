@@ -43,13 +43,15 @@ def test_join_domains_and():
     filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
               '["mainPhone", "=", "123456"]]')
 
+    domains = []
+    or_joined_domains = join_domains(domains)
+    assert or_joined_domains == []
+
     domains = [
         ["id", "=", "001"],
         ["site_id", "=", "003"],
     ]
-
     or_joined_domains = join_domains(domains)
-
     assert or_joined_domains == [
         '|',
         ["id", "=", "001"],
@@ -61,13 +63,28 @@ def test_join_domains_and():
         ["site_id", "=", "003"],
         ["main_phone", "=", "123456"]
     ]
-
     or_joined_domains = join_domains(domains)
-
     assert or_joined_domains == [
         '|',
-        '|',
         ["id", "=", "001"],
+        '|',
         ["site_id", "=", "003"],
         ["main_phone", "=", "123456"]
+    ]
+
+    domains = [
+        ["id", "=", "001"],
+        ["site_id", "=", "003"],
+        ["main_phone", "=", "123456"],
+        ["main_address", "=", "5th street 99"]
+    ]
+    or_joined_domains = join_domains(domains)
+    assert or_joined_domains == [
+        '|',
+        ["id", "=", "001"],
+        '|',
+        ["site_id", "=", "003"],
+        '|',
+        ["main_phone", "=", "123456"],
+        ["main_address", "=", "5th street 99"]
     ]
