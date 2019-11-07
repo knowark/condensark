@@ -31,7 +31,8 @@ async def test_user_middleware_default_user():
         'name': '<<PUBLIC>>',
         'email': '',
         'attributes': {},
-        'authorization': {}
+        'authorization': {},
+        'roles': []
     }
 
 
@@ -82,5 +83,6 @@ async def test_user_middleware_authorization_token_user(headers):
         "name": "John Doe",
         "email": "john@doe.com",
         'attributes': {},
-        'authorization': {}
+        'authorization': {},
+        'roles': []
     }

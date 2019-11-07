@@ -36,7 +36,8 @@ def extract_user(payload: Dict[str, Any]) -> Dict[str, Any]:
         'name': '<<PUBLIC>>',
         'email': '',
         'attributes': {},
-        'authorization': {}
+        'authorization': {},
+        'roles': []
     }
     user.update(payload)
     return user
