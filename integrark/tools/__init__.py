@@ -5,8 +5,8 @@
 
 from ..infrastructure.query.graphql import (
     Solution,
-    DataLoader,
-    StandardDataLoader)
+    DataLoader
+)
 from ..infrastructure.query.utilities import (
-    parse_domain
+    Authorizer
 )

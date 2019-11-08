@@ -28,7 +28,7 @@ class Authorizer:
 
     def secure(self, domain: str, user: Dict[str, Any],
                resource: str = None, operation: str = None) -> List[Any]:
-        domain = parse_domain(domain)
+        original_domain = parse_domain(domain)
         resource = resource or self.default_resource
         operation = operation or self.read_operation
 
@@ -51,7 +51,7 @@ class Authorizer:
                     continue
                 secured_domain.append(read_domain)
 
-        secured_domain = domain + join_domains(secured_domain)
+        secured_domain = original_domain + join_domains(secured_domain)
 
         return secured_domain
 
