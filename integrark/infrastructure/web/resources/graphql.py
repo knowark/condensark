@@ -1,6 +1,7 @@
 from injectark import Injectark
 from aiohttp import web
 from aiohttp_jinja2 import template
+from .... import __version__
 from ....application.coordinators import ExecutionCoordinator
 
 
@@ -12,7 +13,7 @@ class GraphqlResource:
 
     @template('playground.html')
     async def get(self, request):
-        return {'version': '0.1.0'}
+        return {'version': __version__}
 
     async def post(self, request):
         payload = await request.json()
