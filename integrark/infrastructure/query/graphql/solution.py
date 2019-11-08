@@ -12,9 +12,4 @@ class Solution:
     type = 'Query'
 
     def resolve(self, field: str) -> Resolver:
-        return cast(Resolver, self._default_resolver)
-
-    def _default_resolver(
-        self, parent: Any, info: GraphQLResolveInfo,
-            *args, **kwargs) -> Any:
-        return []
+        return getattr(self, f'resolve__{field}', None)

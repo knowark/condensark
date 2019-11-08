@@ -14,4 +14,4 @@ def test_solution(solution):
 def test_solution_default_resolver(solution):
     resolver = solution.resolve('any')
 
-    assert resolver(None, None) == []
+    assert resolver is None
