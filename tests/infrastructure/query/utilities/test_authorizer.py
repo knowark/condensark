@@ -1,3 +1,4 @@
+import json
 import jwt
 from pytest import fixture, raises
 from integrark.infrastructure.query import Authorizer, AuthorizationError
@@ -84,14 +85,15 @@ def test_authorizer_secure(authorizer):
         'email': 'pp@mail.com',
         'roles': ['user', 'manager', 'admin']
     }
-    original_domain = [('city', '=', 'Popayán'), ('type', '=', 'normal')]
+    original_domain = json.dumps(
+        [('city', '=', 'Popayán'), ('type', '=', 'normal')])
     resource = 'tasks'
 
     result = authorizer.secure(original_domain, user, resource)
 
     expected_domain = [
-        ('city', '=', 'Popayán'),
-        ('type', '=', 'normal'),
+        ['city', '=', 'Popayán'],
+        ['type', '=', 'normal'],
         '|',
         ['created_by', '=', '001'],
         ['manager_id', '=', '001']
@@ -106,7 +108,8 @@ def test_authorizer_secure_not_authorized(authorizer):
         'email': 'pp@mail.com',
         'roles': ['external']
     }
-    original_domain = [('city', '=', 'Popayán'), ('type', '=', 'normal')]
+    original_domain = json.dumps(
+        [('city', '=', 'Popayán'), ('type', '=', 'normal')])
     resource = 'tasks'
 
     with raises(AuthorizationError):

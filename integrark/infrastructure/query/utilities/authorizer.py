@@ -1,5 +1,5 @@
 from typing import List, Dict, Any
-from .parse_domain import join_domains
+from .parse_domain import parse_domain, join_domains
 
 
 class Authorizer:
@@ -26,8 +26,9 @@ class Authorizer:
             raise AuthorizationError(
                 f"User <{user['name']}> not authorized.")
 
-    def secure(self, domain: List[Any], user: Dict[str, Any],
+    def secure(self, domain: str, user: Dict[str, Any],
                resource: str = None, operation: str = None) -> List[Any]:
+        domain = parse_domain(domain)
         resource = resource or self.default_resource
         operation = operation or self.read_operation
 
