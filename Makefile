@@ -17,7 +17,7 @@ coverage-infrastructure:
 	--cov-report term-missing -s
 
 coverage: 
-	pytest -x --cov=$(PROJECT) tests/ --cov-report term-missing -s -v
+	pytest -x --cov=$(PROJECT) tests/ --cov-report term-missing -s -vv
 
 serve:
 	python -m $(PROJECT) serve

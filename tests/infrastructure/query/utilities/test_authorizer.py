@@ -11,7 +11,7 @@ def permissions():
             'delete': ['admin'],
             'update': ['admin'],
             'read': {
-                'admin': lambda user: ['id', '!=', '']
+                'admin': lambda user: []
             }
         },
         "projects": {
@@ -19,7 +19,7 @@ def permissions():
             'delete': ['admin'],
             'update': ['admin', 'manager'],
             'read': {
-                'admin': lambda user: ['id', '!=', ''],
+                'admin': lambda user: [],
                 'manager': lambda user: [
                     'city', '=', user['attributes']['city']],
                 'user': lambda user: ['id', '=', user['uid']]
@@ -30,10 +30,9 @@ def permissions():
             'delete': ['admin'],
             'update': ['admin', 'manager', 'user'],
             'read': {
-                'admin': lambda user: ['id', '!=', ''],
-                'manager': lambda user: [
-                    'city', '=', user['attributes']['city']],
-                'user': lambda user: ['id', '=', user['uid']]
+                'admin': lambda user: [],
+                'manager': lambda user: ['manager_id', '=', user['uid']],
+                'user': lambda user: ['created_by', '=', user['uid']]
             }
         }
     }
@@ -58,8 +57,8 @@ def test_authorizer_check(authorizer):
         'email': 'pp@mail.com',
         'roles': ['user']
     }
-
     resource = 'tasks'
+
     result = authorizer.check(user, resource)
 
     assert result is None
@@ -76,3 +75,39 @@ def test_authorizer_check_unauthorized_resource(authorizer):
     resource = 'project'
     with raises(AuthorizationError):
         result = authorizer.check(user, resource)
+
+
+def test_authorizer_secure(authorizer):
+    user = {
+        'uid': '001',
+        'name': 'Pepe Pérez',
+        'email': 'pp@mail.com',
+        'roles': ['user', 'manager', 'admin']
+    }
+    original_domain = [('city', '=', 'Popayán'), ('type', '=', 'normal')]
+    resource = 'tasks'
+
+    result = authorizer.secure(original_domain, user, resource)
+
+    expected_domain = [
+        ('city', '=', 'Popayán'),
+        ('type', '=', 'normal'),
+        '|',
+        ['created_by', '=', '001'],
+        ['manager_id', '=', '001']
+    ]
+    assert result == expected_domain
+
+
+def test_authorizer_secure_not_authorized(authorizer):
+    user = {
+        'uid': '001',
+        'name': 'Pepe Pérez',
+        'email': 'pp@mail.com',
+        'roles': ['external']
+    }
+    original_domain = [('city', '=', 'Popayán'), ('type', '=', 'normal')]
+    resource = 'tasks'
+
+    with raises(AuthorizationError):
+        result = authorizer.secure(original_domain, user, resource)
