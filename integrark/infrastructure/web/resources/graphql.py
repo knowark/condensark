@@ -12,10 +12,10 @@ class GraphqlResource:
         self.injector = injector
 
     @template('playground.html')
-    async def get(self, request):
+    async def get(self, request: web.Request):
         return {'version': __version__}
 
-    async def post(self, request):
+    async def post(self, request: web.Request):
         payload = await request.json()
 
         context = {
