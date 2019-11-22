@@ -18,7 +18,8 @@ class GraphqlQueryService(QueryService):
                   context: Dict[str, Any] = None) -> QueryResult:
         context = context or {}
         graphql_kwargs = context.pop('graphql', {'context_value': {}})
-        graphql_kwargs['context_value'].update({
+        graphql_context = graphql_kwargs['context_value']
+        graphql_context.update({
             'dataloaders': self.dataloaders
         })
 

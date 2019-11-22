@@ -17,6 +17,14 @@ def standard_dataloader() -> DataLoader:
     return StandardDataLoader(dummy_fetch)
 
 
+async def test_data_loader_optional_context():
+    context = {'data': 'any'}
+
+    dataloader = StandardDataLoader(lambda ids: [], context)
+
+    assert context == dataloader.context
+
+
 async def test_dataloader_queue():
     dataloader = standard_dataloader()
 

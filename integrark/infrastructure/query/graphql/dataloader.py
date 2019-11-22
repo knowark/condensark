@@ -7,10 +7,11 @@ FetchFunction = Callable[[List[str]], Awaitable[List[Any]]]
 
 
 class DataLoader(ABC):
-    def __init__(self):
+    def __init__(self, context: Dict[str, Any] = None):
         self.loop = get_event_loop()
         self.queue: List[Loader] = []
         self.cache: Dict[str, Any] = {}
+        self.context: Dict[str, Any] = context or {}
 
     def load(self, id: str) -> Awaitable[Any]:
         cached_result = self.cache.get(id)
@@ -49,8 +50,9 @@ class DataLoader(ABC):
 
 
 class StandardDataLoader(DataLoader):
-    def __init__(self, fetch_function: FetchFunction) -> None:
-        super().__init__()
+    def __init__(self, fetch_function: FetchFunction,
+                 context: Dict[str, Any] = None) -> None:
+        super().__init__(context)
         self.fetch_function = fetch_function
 
     async def fetch(self, ids: List[str]) -> List[Any]:
