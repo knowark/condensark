@@ -1,7 +1,13 @@
 from .empty import *
-from .query_type import Solution
+from .query import Solution
+from .dataloaders import DroidLoader, EpisodeLoader
 
 
 SOLUTIONS = [
     Solution
+]
+
+DATALOADERS = [
+    DroidLoader,
+    EpisodeLoader
 ]

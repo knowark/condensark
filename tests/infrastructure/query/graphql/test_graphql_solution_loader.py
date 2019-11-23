@@ -23,7 +23,7 @@ async def test_graphql_solution_loader_load(
         }
     }
 
-    solutions, dataloaders = solution_loader.load()
+    solutions, dataloaders_factory = solution_loader.load()
 
     query_solution = next(solution for solution in solutions
                           if solution.type == 'Query')
@@ -38,9 +38,14 @@ async def test_graphql_solution_loader_load(
             }
         }
 
+    dataloaders = dataloaders_factory(Info.context)
+
     assert (await hero_resolver(None, Info(), 1))['name'] == 'R2-D2'
-    for name, loader in dataloaders:
+
+    assert len(dataloaders)
+    for name, loader in dataloaders.items():
         assert isinstance(loader, DataLoader)
+        assert loader.context == Info.context
 
 
 async def test_graphql_solution_loader_load_nonpackage(
@@ -51,4 +56,5 @@ async def test_graphql_solution_loader_load_nonpackage(
 
     solutions = solution_loader.load()
 
-    assert solutions == ([], {})
+    assert isinstance(solutions, tuple)
+    assert len(solutions) == 2

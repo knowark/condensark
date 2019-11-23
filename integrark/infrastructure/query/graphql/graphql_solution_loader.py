@@ -15,8 +15,8 @@ class GraphqlSolutionLoader:
 
     def load(self) -> Tuple[List[Solution], Dict[str, DataLoader]]:
         package = self._load_package(Path(self.path))
-        solutions = self._load_solutions_from_package(package) or []
-        dataloaders = self._load_dataloaders_from_package(package) or {}
+        solutions = self._load_solutions(package) or []
+        dataloaders = self._load_dataloaders_factory(package)
         return (sorted(solutions, key=lambda s: s.type), dataloaders)
 
     def _load_package(self, path: Path) -> ModuleType:
@@ -32,14 +32,14 @@ class GraphqlSolutionLoader:
 
         return package
 
-    def _load_solutions_from_package(
-            self, package: ModuleType) -> List[Solution]:
+    def _load_solutions(self, package: ModuleType) -> List[Solution]:
         return [
             solution_class() for solution_class in
             getattr(package, 'SOLUTIONS', [])]
 
-    def _load_dataloaders_from_package(
+    def _load_dataloaders_factory(
             self, package: ModuleType) -> Dict[str, DataLoader]:
-        return {
-            dataloader_class.__name__: dataloader_class()
-            for dataloader_class in getattr(package, 'DATALOADERS', [])}
+        dataloader_classes = getattr(package, 'DATALOADERS', [])
+        return lambda context: {
+            dataloader_class.__name__: dataloader_class(context)
+            for dataloader_class in dataloader_classes}

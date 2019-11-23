@@ -48,7 +48,7 @@ def solution_loader() -> GraphqlSolutionLoader:
 
     class MockGraphqlSolutionLoader(GraphqlSolutionLoader):
         def load(self):
-            return [MockSolution()], {}
+            return [MockSolution()], lambda context: {}
 
     return MockGraphqlSolutionLoader('/tmp/fake')
 
