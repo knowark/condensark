@@ -1,5 +1,5 @@
 from typing import List, Awaitable, Any, Union
-from asyncio import Future, isfuture, sleep
+from asyncio import Future, isfuture, sleep, CancelledError
 from pytest import fixture, raises
 from integrark.infrastructure.query.graphql import (
     DataLoader, StandardDataLoader)
@@ -60,6 +60,26 @@ async def test_dataloader_load():
 
     assert result_1 == {'id': '1', 'value': f'Response: 1'}
     assert result_2 == {'id': '2', 'value': f'Response: 2'}
+
+
+async def test_dataloader_load_already_done():
+    dataloader = standard_dataloader()
+
+    future_1 = dataloader.load('1')
+
+    assert len(dataloader.queue) == 1
+    assert future_1.done() is False
+
+    future_1.cancel()
+    assert future_1.done() is True
+
+    await sleep(0.01)
+
+    assert len(dataloader.queue) == 0
+    assert future_1.done() is True
+
+    with raises(CancelledError):
+        result_1 = await future_1
 
 
 async def test_dataloader_load_many():

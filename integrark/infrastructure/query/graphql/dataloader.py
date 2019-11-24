@@ -43,6 +43,8 @@ class DataLoader(ABC):
         ids = [item.id for item in queue]
         values = await self.fetch(ids)
         for item, value in zip(queue, values):
+            if item.future.done():
+                continue
             if isinstance(value, Exception):
                 item.future.set_exception(value)
             else:
