@@ -1,6 +1,6 @@
 import json
 from typing import List, Dict, Any
-from .normalizer import camel_to_snake
+from .normalize import camel_to_snake, snake_to_camel
 
 
 def parse_domain(filter: str, alias: Dict[str, str] = None,

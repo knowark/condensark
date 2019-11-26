@@ -16,6 +16,7 @@ def test_snake_to_camel():
     assert snake_to_camel('the_brown_fox') == 'theBrownFox'
     assert snake_to_camel('the_Brown_fox') == 'theBrownFox'
     assert snake_to_camel('The_Brown_Fox') == 'theBrownFox'
+    assert snake_to_camel('theBrownFox') == 'theBrownFox'
 
 
 def test_snake_normalize_simple():

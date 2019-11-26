@@ -18,12 +18,19 @@ def normalize(data: DATA_TYPE, format='camel') -> DATA_TYPE:
 
     return normalized_data
 
+# Adapted from:
+# https://github.com/okunishinishi/python-stringcase
 
-def camel_to_snake(word: str) -> str:
-    chain = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', word)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', chain).lower()
+
+def camel_to_snake(value: str) -> str:
+    value = re.sub(r"[\-\.\s]", '_', str(value))
+    return (value[0].lower() +
+            re.sub(r"[A-Z]",
+                   lambda matched: '_' + matched.group(0).lower(), value[1:]))
 
 
 def snake_to_camel(value: str) -> str:
-    title_case = value.title().replace("_", "")
-    return title_case[0].lower() + title_case[1:]
+    value = re.sub(r"^[\-_\.]", '', str(value))
+    return (value[0].lower() +
+            re.sub(r"[\-_\.\s]([A-Za-z])",
+                   lambda matched: matched.group(1).upper(), value[1:]))
