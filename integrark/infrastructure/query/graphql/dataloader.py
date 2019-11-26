@@ -37,11 +37,14 @@ class DataLoader(ABC):
         self.loop.call_soon(ensure_future, self._dispatch())
 
     async def _dispatch(self):
-        queue = self.queue
-        self.queue = []
+        ids = [item.id for item in self.queue]
+        values = (await self.fetch(ids)) or []
+        if len(values) != len(ids):
+            return self._terminate(TypeError(
+                "Unequal number of elements returned by fetch:\n"
+                f"<ids>: {ids}\n<values>: {values}\n"))
 
-        ids = [item.id for item in queue]
-        values = await self.fetch(ids)
+        queue, self.queue = self.queue, []
         for item, value in zip(queue, values):
             if item.future.done():
                 continue
@@ -49,6 +52,12 @@ class DataLoader(ABC):
                 item.future.set_exception(value)
             else:
                 item.future.set_result(value)
+
+    def _terminate(self, error: Exception):
+        self.cache = {}
+        queue, self.queue = self.queue, []
+        for item in queue:
+            item.future.set_exception(error)
 
 
 class StandardDataLoader(DataLoader):

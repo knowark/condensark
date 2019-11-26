@@ -156,6 +156,53 @@ async def test_dataloader_load_exception():
 
     with raises(Exception) as execinfo:
         result_2 = await future_2
-        assert str(execinfo.value) == 'Error at retrieving id: <2>'
 
+    assert str(execinfo.value) == 'Error at retrieving id: <2>'
     assert result_1 == {'id': '1', 'value': f'Response: 1'}
+
+
+async def test_dataloader_unequal_length_fetch_error():
+    async def unequal_fetch(ids: List[str]) -> List[Any]:
+        return [{'id': id, 'value': f'Response: {id}'}
+                for id in ids[:-1]]
+
+    dataloader = StandardDataLoader(unequal_fetch)
+
+    future_1 = dataloader.load('1')
+    future_2 = dataloader.load('2')
+    future_3 = dataloader.load('3')
+    future_4 = dataloader.load('2')
+
+    assert len(dataloader.queue) == 3
+
+    await sleep(0.01)
+
+    with raises(TypeError) as execinfo:
+        result_1 = await future_1
+
+    assert len(dataloader.queue) == 0
+    assert len(dataloader.cache) == 0
+
+
+async def test_dataloader_fetch_returns_none():
+    async def empty_fetch(ids: List[str]) -> List[Any]:
+        """Empty fetch returns None"""
+
+    dataloader = StandardDataLoader(empty_fetch)
+
+    future_1 = dataloader.load('1')
+    future_2 = dataloader.load('2')
+
+    assert len(dataloader.queue) == 2
+
+    await sleep(0.01)
+
+    with raises(TypeError) as execinfo:
+        result_1 = await future_1
+
+    assert str(execinfo.value) == (
+        "Unequal number of elements returned by fetch:\n"
+        "<ids>: ['1', '2']\n"
+        "<values>: []\n")
+    assert len(dataloader.queue) == 0
+    assert len(dataloader.cache) == 0
