@@ -2,7 +2,8 @@ from typing import Dict, Any
 from integrark.infrastructure.query import (
     camel_to_snake,
     snake_to_camel,
-    normalize
+    normalize,
+    normalize_domain
 )
 
 
@@ -146,3 +147,13 @@ def test_camel_normalize_list():
         {'userId': '003', 'name': 'Brad', 'phoneNumber': '3333'},
         {'userId': '004', 'name': 'Carl', 'phoneNumber': '4444'}
     ]
+
+
+def test_normalize_domain_default_snake_case():
+    filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
+              '["mainPhone", "=", "123456"]]')
+
+    domain = normalize_domain(filter)
+
+    assert domain == ('[["id", "=", "001"], ["site_id", "=", "003"], '
+                      '["main_phone", "=", "123456"]]')

@@ -9,7 +9,6 @@ from ..infrastructure.query.graphql import (
 )
 from ..infrastructure.query.utilities import (
     Authorizer,
-    camel_to_snake,
-    snake_to_camel,
-    normalize
+    normalize,
+    normalize_domain
 )

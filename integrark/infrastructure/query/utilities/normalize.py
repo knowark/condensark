@@ -1,5 +1,8 @@
 import re
+import json
 from typing import Sequence, Dict, Union, Any
+from .format import snake_to_camel, camel_to_snake
+from .parse_domain import parse_domain
 
 DATA_TYPE = Union[Sequence[Dict[str, Any]], Dict[str, Any]]
 
@@ -18,19 +21,7 @@ def normalize(data: DATA_TYPE, format='camel') -> DATA_TYPE:
 
     return normalized_data
 
-# Adapted from:
-# https://github.com/okunishinishi/python-stringcase
 
-
-def camel_to_snake(value: str) -> str:
-    value = re.sub(r"[\-\.\s]", '_', str(value))
-    return (value[0].lower() +
-            re.sub(r"[A-Z]",
-                   lambda matched: '_' + matched.group(0).lower(), value[1:]))
-
-
-def snake_to_camel(value: str) -> str:
-    value = re.sub(r"^[\-_\.]", '', str(value))
-    return (value[0].lower() +
-            re.sub(r"[\-_\.\s]([A-Za-z])",
-                   lambda matched: matched.group(1).upper(), value[1:]))
+def normalize_domain(filter: str, alias: Dict[str, str] = None,
+                     snake=True) -> str:
+    return json.dumps(parse_domain(filter, alias, snake))
