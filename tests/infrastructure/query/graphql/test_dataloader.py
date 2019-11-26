@@ -201,8 +201,7 @@ async def test_dataloader_fetch_returns_none():
         result_1 = await future_1
 
     assert str(execinfo.value) == (
-        "Unequal number of elements returned by fetch:\n"
-        "<ids>: ['1', '2']\n"
-        "<values>: []\n")
+        "Unequal number of elements returned by fetch: "
+        "<ids>: ['1', '2'] <values>: []")
     assert len(dataloader.queue) == 0
     assert len(dataloader.cache) == 0

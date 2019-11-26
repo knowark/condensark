@@ -41,8 +41,8 @@ class DataLoader(ABC):
         values = (await self.fetch(ids)) or []
         if len(values) != len(ids):
             return self._terminate(TypeError(
-                "Unequal number of elements returned by fetch:\n"
-                f"<ids>: {ids}\n<values>: {values}\n"))
+                "Unequal number of elements returned by fetch: "
+                f"<ids>: {ids} <values>: {values}"))
 
         queue, self.queue = self.queue, []
         for item, value in zip(queue, values):
