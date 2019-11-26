@@ -149,6 +149,20 @@ def test_camel_normalize_list():
     ]
 
 
+def test_camel_normalize_primitives():
+    camel_data = normalize([
+        {'user_id': '002', 'name': 'Mark', 'phone_number': '2222'},
+        "admin",
+        5
+    ])
+
+    assert camel_data == [
+        {'userId': '002', 'name': 'Mark', 'phoneNumber': '2222'},
+        "admin",
+        5
+    ]
+
+
 def test_normalize_domain_default_snake_case():
     filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
               '["mainPhone", "=", "123456"]]')

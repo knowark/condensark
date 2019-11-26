@@ -4,10 +4,14 @@ from typing import Sequence, Dict, Union, Any
 from .format import snake_to_camel, camel_to_snake
 from .parse_domain import parse_domain
 
-DATA_TYPE = Union[Sequence[Dict[str, Any]], Dict[str, Any]]
+DATA_TYPE = Union[
+    Sequence[Dict[str, Any]], Dict[str, Any], str, int, float, bool]
 
 
 def normalize(data: DATA_TYPE, format='camel') -> DATA_TYPE:
+    if isinstance(data, (str, int, float, bool)):
+        return data
+
     if isinstance(data, (list, tuple)):
         return [normalize(item, format) for item in data]
 
