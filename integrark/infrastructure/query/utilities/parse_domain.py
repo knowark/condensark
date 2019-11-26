@@ -1,6 +1,6 @@
-import re
 import json
 from typing import List, Dict, Any
+from .normalizer import camel_to_snake
 
 
 def parse_domain(filter: str, alias: Dict[str, str] = None,
@@ -30,8 +30,3 @@ def join_domains(domains: List[List[Any]], symbol='|') -> List[Any]:
     or_list.append(domains[-1])
 
     return or_list
-
-
-def camel_to_snake(word: str) -> str:
-    chain = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', word)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', chain).lower()
