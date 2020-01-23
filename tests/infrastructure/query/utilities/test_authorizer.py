@@ -1,5 +1,5 @@
-import json
 import jwt
+import rapidjson as json
 from pytest import fixture, raises
 from integrark.infrastructure.query import Authorizer, AuthorizationError
 

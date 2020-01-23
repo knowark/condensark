@@ -1,5 +1,5 @@
 import os
-import json
+import rapidjson as json
 from pytest import raises, fixture
 from integrark.infrastructure.core import (
     TrialConfig, DevelopmentConfig, ProductionConfig,

@@ -20,8 +20,8 @@ def create_app(config, injector: Injectark) -> web.Application:
     return app
 
 
-def run_app(app: web.Application, port=4321) -> None:
-    web.run_app(app, port=port)
+async def run_app(app: web.Application, port=4321) -> None:
+    await web._run_app(app, port=port)
 
 
 def enable_cors(app: web.Application) -> None:

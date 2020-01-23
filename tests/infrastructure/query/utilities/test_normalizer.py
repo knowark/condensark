@@ -1,3 +1,4 @@
+import rapidjson as json
 from typing import Dict, Any
 from integrark.infrastructure.query import (
     camel_to_snake,
@@ -169,5 +170,8 @@ def test_normalize_domain_default_snake_case():
 
     domain = normalize_domain(filter)
 
-    assert domain == ('[["id", "=", "001"], ["site_id", "=", "003"], '
-                      '["main_phone", "=", "123456"]]')
+    print('DOMAIN::', domain)
+
+    assert json.loads(domain) == [["id", "=", "001"],
+                                  ["site_id", "=", "003"],
+                                  ["main_phone", "=", "123456"]]

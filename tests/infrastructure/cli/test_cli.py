@@ -1,6 +1,6 @@
 import contextlib
 from typing import List
-from unittest.mock import Mock
+from asyncmock import AsyncMock
 from argparse import ArgumentParser, Namespace
 from pytest import raises
 from integrark.infrastructure.cli import Cli
@@ -11,29 +11,29 @@ def test_cli_instantiation(cli):
     assert cli is not None
 
 
-def test_cli_run(cli):
-    mock_parse = Mock()
+async def test_cli_run(cli):
+    mock_parse = AsyncMock()
     cli.parse = mock_parse
     argv: List = []
-    cli.run(argv)
+    await cli.run(argv)
 
     assert mock_parse.call_count == 1
 
 
-def test_cli_parse(cli):
+async def test_cli_parse(cli):
     called = False
     argv = ['serve']
-    result = cli.parse(argv)
+    result = await cli.parse(argv)
 
     assert result is not None
 
 
-def test_cli_parse_empty_argv(cli):
+async def test_cli_parse_empty_argv(cli):
     with raises(SystemExit) as e:
-        result = cli.parse([])
+        result = await cli.parse([])
 
 
-def test_cli_serve(cli, monkeypatch):
+async def test_cli_serve(cli, monkeypatch):
     called = False
     application = None
     port = None
@@ -46,7 +46,7 @@ def test_cli_serve(cli, monkeypatch):
     monkeypatch.setattr(
         cli_module, 'create_app', mock_create_app)
 
-    def mock_run_app(app, port_):
+    async def mock_run_app(app, port_):
         nonlocal called
         nonlocal port
         nonlocal application
@@ -59,7 +59,7 @@ def test_cli_serve(cli, monkeypatch):
 
     namespace.port = 7777
 
-    result = cli.serve(namespace)
+    result = await cli.serve(namespace)
 
     assert called
     assert application == {'Application': 'app'}

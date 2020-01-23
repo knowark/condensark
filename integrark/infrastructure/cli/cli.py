@@ -1,10 +1,14 @@
 import sys
 import json
+import logging
 from argparse import ArgumentParser, Namespace
 from injectark import Injectark
 from typing import List
 from ..core import Config
 from ..web import create_app, run_app
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger()
 
 
 class Cli:
@@ -13,11 +17,11 @@ class Cli:
         self.injector = injector
         self.parser = ArgumentParser('Integrark')
 
-    def run(self, argv: List[str]):
-        args = self.parse(argv)
-        args.func(args)
+    async def run(self, argv: List[str]):
+        args = await self.parse(argv)
+        await args.func(args)
 
-    def parse(self, argv: List[str]) -> Namespace:
+    async def parse(self, argv: List[str]) -> Namespace:
         subparsers = self.parser.add_subparsers()
 
         # Serve
@@ -32,8 +36,8 @@ class Cli:
 
         return self.parser.parse_args(argv)
 
-    def serve(self, args: Namespace) -> None:
-        print('...SERVE:::', args)
+    async def serve(self, args: Namespace) -> None:
+        logger.info('SERVE')
         port = args.port or self.config['port']
         app = create_app(self.config, self.injector)
-        run_app(app, port)
+        await run_app(app, port)

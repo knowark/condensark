@@ -19,13 +19,13 @@ def test_create_app():
     assert isinstance(app, web.Application)
 
 
-def test_run_app(monkeypatch):
+async def test_run_app(monkeypatch):
     application = None
     called = None
     mock_application = web.Application()
 
     class MockWeb:
-        def run_app(self, app, port):
+        async def _run_app(self, app, port):
             nonlocal called
             called = True
             nonlocal application
@@ -34,7 +34,7 @@ def test_run_app(monkeypatch):
     monkeypatch.setattr(
         base_module, 'web', MockWeb())
 
-    run_app(mock_application)
+    await run_app(mock_application)
 
     assert called
     assert application == mock_application

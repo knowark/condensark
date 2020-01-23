@@ -1,5 +1,5 @@
 import re
-import json
+import rapidjson as json
 from typing import Sequence, Dict, Union, Any
 from .format import snake_to_camel, camel_to_snake
 from .parse_domain import parse_domain
