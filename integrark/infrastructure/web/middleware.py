@@ -1,6 +1,5 @@
 from typing import Dict, List, Callable, Any
 from aiohttp import web
-from jwt import PyJWTError
 from injectark import Injectark
 
 
@@ -12,19 +11,14 @@ def user_middleware_factory(injector: Injectark) -> Callable:
     async def user_middleware(
             request: web.Request, handler: Callable) -> web.Response:
 
-        authorization = request.headers.get('Authorization', "")
-        token = authorization.replace('Bearer ', '')
+        token = request.headers.get(
+            'Authorization', '').replace('Bearer ', '')
 
-        try:
-            token_payload = jwt_supplier.decode(token)
-        except PyJWTError:
-            token_payload = {}
+        token_payload = jwt_supplier.decode(token) if token else {}
 
         request['user'] = extract_user(token_payload)
 
-        response = await handler(request)
-
-        return response
+        return await handler(request)
 
     return user_middleware
 
