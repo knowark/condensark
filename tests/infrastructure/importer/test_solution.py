@@ -1,5 +1,5 @@
 from pytest import fixture, raises
-from integrark.infrastructure.query.graphql import Solution
+from integrark.infrastructure.importer import Solution
 
 
 @fixture

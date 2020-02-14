@@ -1,7 +1,7 @@
 from typing import List, Awaitable, Any, Union
 from asyncio import Future, isfuture, sleep, CancelledError
 from pytest import fixture, raises
-from integrark.infrastructure.query.graphql import (
+from integrark.infrastructure.importer import (
     DataLoader, StandardDataLoader)
 
 
