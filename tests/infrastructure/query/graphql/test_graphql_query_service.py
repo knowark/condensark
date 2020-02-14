@@ -3,8 +3,7 @@ from graphql import GraphQLSchema, build_schema, graphql
 from integrark.application.services import QueryService
 from integrark.infrastructure.query import GraphqlQueryService
 from integrark.infrastructure.importer import IntegrationImporter
-from integrark.infrastructure.query.graphql import (
-    GraphqlSchemaLoader, GraphqlSolutionLoader)
+from integrark.infrastructure.query.graphql import GraphqlSchemaLoader
 
 
 @fixture

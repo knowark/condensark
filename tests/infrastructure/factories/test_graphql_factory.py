@@ -26,9 +26,6 @@ def mock_strategy():
         },
         "GraphqlSchemaLoader": {
             "method": "graphql_schema_loader"
-        },
-        "GraphqlSolutionLoader": {
-            "method": "graphql_solution_loader"
         }
     }
 
