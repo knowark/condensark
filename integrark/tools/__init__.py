@@ -2,8 +2,7 @@
     This package exports tool classes to be used
     in external Solution packages.
 """
-
-from ..infrastructure.query.graphql import (
+from ..infrastructure.importer import (
     Solution,
     DataLoader
 )
