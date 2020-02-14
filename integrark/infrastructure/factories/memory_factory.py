@@ -2,6 +2,7 @@ from pathlib import Path
 from ...application.services import QueryService, StandardQueryService
 from ...application.coordinators import ExecutionCoordinator
 from ..core import Config, JwtSupplier
+from ..importer import IntegrationImporter
 from .factory import Factory
 
 
@@ -22,3 +23,9 @@ class MemoryFactory(Factory):
                   if secret_file.is_file() else 'INTEGRARK_SECRET')
 
         return JwtSupplier(secret)
+
+    def integration_importer(self) -> IntegrationImporter:
+        integrations_directory = self.config['integrations_directory']
+        integration_importer = IntegrationImporter(integrations_directory)
+        integration_importer.load()
+        return integration_importer

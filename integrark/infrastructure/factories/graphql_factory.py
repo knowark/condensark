@@ -1,7 +1,8 @@
 from ..core import Config
-from .memory_factory import MemoryFactory
+from ..importer import IntegrationImporter
 from ..query import GraphqlQueryService
 from ..query.graphql import GraphqlSchemaLoader, GraphqlSolutionLoader
+from .memory_factory import MemoryFactory
 
 
 class GraphqlFactory(MemoryFactory):
@@ -10,8 +11,8 @@ class GraphqlFactory(MemoryFactory):
 
     def graphql_query_service(
             self, schema_loader: GraphqlSchemaLoader,
-            solution_loader: GraphqlSolutionLoader) -> GraphqlQueryService:
-        return GraphqlQueryService(schema_loader, solution_loader)
+            integration_importer: IntegrationImporter) -> GraphqlQueryService:
+        return GraphqlQueryService(schema_loader, integration_importer)
 
     def graphql_schema_loader(self) -> GraphqlSchemaLoader:
         definitions_directory = self.config['schema_definitions_directory']

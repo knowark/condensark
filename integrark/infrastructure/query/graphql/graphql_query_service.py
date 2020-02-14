@@ -1,17 +1,17 @@
 from typing import List, Dict, Any
 from graphql import GraphQLSchema, graphql, format_error
 from ....application.services import QueryService, QueryResult
+from ...importer import IntegrationImporter, Solution
 from .graphql_schema_loader import GraphqlSchemaLoader
-from .graphql_solution_loader import GraphqlSolutionLoader
-from .solution import Solution
 
 
 class GraphqlQueryService(QueryService):
 
     def __init__(self, schema_loader: GraphqlSchemaLoader,
-                 solution_loader: GraphqlSolutionLoader) -> None:
+                 integration_importer: IntegrationImporter) -> None:
         self.schema = schema_loader.load()
-        self.solutions, self.dataloaders_factory = solution_loader.load()
+        self.solutions = integration_importer.solutions
+        self.dataloaders_factory = integration_importer.dataloaders_factory
         self.schema = self._bind_schema(self.schema, self.solutions)
 
     async def run(self, query: str,

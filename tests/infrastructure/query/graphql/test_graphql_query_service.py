@@ -2,6 +2,7 @@ from pytest import fixture, raises
 from graphql import GraphQLSchema, build_schema, graphql
 from integrark.application.services import QueryService
 from integrark.infrastructure.query import GraphqlQueryService
+from integrark.infrastructure.importer import IntegrationImporter
 from integrark.infrastructure.query.graphql import (
     GraphqlSchemaLoader, GraphqlSolutionLoader)
 
@@ -29,7 +30,7 @@ def schema_loader() -> GraphqlSchemaLoader:
 
 
 @fixture
-def solution_loader() -> GraphqlSolutionLoader:
+def integration_importer() -> IntegrationImporter:
     class MockSolution:
         type = 'Query'
 
@@ -46,16 +47,19 @@ def solution_loader() -> GraphqlSolutionLoader:
         async def resolve__veterinary(self, parent, info):
             raise Exception('The veterinary field has not been implemented.')
 
-    class MockGraphqlSolutionLoader(GraphqlSolutionLoader):
+    class MockIntegrationImporter(IntegrationImporter):
         def load(self):
-            return [MockSolution()], lambda context: {}
+            self.solutions = [MockSolution()]
+            self.dataloaders_factory = lambda context: {}
 
-    return MockGraphqlSolutionLoader('/tmp/fake')
+    integration_importer = MockIntegrationImporter('/tmp/fake')
+    integration_importer.load()
+    return integration_importer
 
 
 @fixture
-def query_service(schema_loader, solution_loader) -> GraphqlQueryService:
-    return GraphqlQueryService(schema_loader, solution_loader)
+def query_service(schema_loader, integration_importer) -> GraphqlQueryService:
+    return GraphqlQueryService(schema_loader, integration_importer)
 
 
 @fixture

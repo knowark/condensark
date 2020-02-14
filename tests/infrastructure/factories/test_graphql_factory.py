@@ -21,6 +21,9 @@ def mock_strategy():
         "QueryService": {
             "method": "graphql_query_service"
         },
+        "IntegrationImporter": {
+            "method": "integration_importer"
+        },
         "GraphqlSchemaLoader": {
             "method": "graphql_schema_loader"
         },

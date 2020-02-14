@@ -13,10 +13,10 @@ class IntegrationImporter:
     def __init__(self, directory: str) -> None:
         self.path = directory
         self.extension = 'py'
-        self.solutions: List[Solution] = None
-        self.locations: List[Location] = None
+        self.solutions: List[Solution] = []
+        self.locations: List[Location] = []
         self.dataloaders_factory: Callable[
-            [Any], Dict[str, DataLoader]] = None
+            [Any], Dict[str, DataLoader]] = lambda context: {}
 
     def load(self) -> None:
         package = self._load_package(Path(self.path))

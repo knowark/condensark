@@ -20,10 +20,14 @@ class Config(defaultdict, ABC):
             },
             "JwtSupplier": {
                 "method": "jwt_supplier"
+            },
+            "IntegrationImporter": {
+                "method": "integration_importer"
             }
         }
         self['schema_definitions_directory'] = 'schema/definitions'
         self['schema_solutions_directory'] = 'schema/solutions/default'
+        self['integrations_directory'] = 'integrations/default'
         self['secrets'] = {
             "jwt": str(Path.home().joinpath('sign.txt'))
         }
