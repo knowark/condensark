@@ -170,8 +170,6 @@ def test_normalize_domain_default_snake_case():
 
     domain = normalize_domain(filter)
 
-    print('DOMAIN::', domain)
-
     assert json.loads(domain) == [["id", "=", "001"],
                                   ["site_id", "=", "003"],
                                   ["main_phone", "=", "123456"]]
