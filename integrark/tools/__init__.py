@@ -4,6 +4,7 @@
 """
 from ..infrastructure.importer import (
     Solution,
+    Location,
     DataLoader
 )
 from ..infrastructure.query.utilities import (
