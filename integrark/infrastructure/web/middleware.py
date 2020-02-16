@@ -13,6 +13,7 @@ def user_middleware_factory(injector: Injectark) -> Callable:
 
         token = request.headers.get(
             'Authorization', '').replace('Bearer ', '')
+        token = token or request.query.get('access_token', '')
 
         token_payload = jwt_supplier.decode(token) if token else {}
 
