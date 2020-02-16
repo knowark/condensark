@@ -11,8 +11,8 @@ def test_location(location):
     assert location.path == ''
 
 
-def test_solution_default_resolver(location):
+async def test_solution_default_resolver(location):
     location.path = 'upstream_service'
-    result = location.route({'context': 'data'})
+    result = await location.route({'context': 'data'})
 
     assert result == "REST Proxy. Context: {'context': 'data'}"
