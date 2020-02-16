@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, Any
 from pytest import fixture, raises
 from graphql.type import GraphQLResolveInfo
-from integrark.infrastructure.importer import (
+from integrark.infrastructure.core import (
     IntegrationImporter, DataLoader)
 from .sample_data import human_data, droid_data
 

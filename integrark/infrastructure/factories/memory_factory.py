@@ -4,8 +4,7 @@ from ...application.services import (
     RouteService, StandardRouteService)
 from ...application.coordinators import (
     ExecutionCoordinator, RoutingCoordinator)
-from ..core import Config, JwtSupplier
-from ..importer import IntegrationImporter
+from ..core import Config, JwtSupplier, IntegrationImporter
 from .factory import Factory
 
 

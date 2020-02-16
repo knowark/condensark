@@ -1,5 +1,4 @@
-from ..core import Config
-from ..importer import IntegrationImporter
+from ..core import Config, IntegrationImporter
 from ..query import GraphqlQueryService
 from ..query.graphql import GraphqlSchemaLoader
 from .memory_factory import MemoryFactory

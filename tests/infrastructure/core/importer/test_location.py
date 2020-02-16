@@ -1,5 +1,5 @@
 from pytest import fixture, raises
-from integrark.infrastructure.importer import Location
+from integrark.infrastructure.core import Location
 
 
 @fixture
