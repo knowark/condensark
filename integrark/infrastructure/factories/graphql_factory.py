@@ -1,10 +1,10 @@
 from ..core import Config, IntegrationImporter
 from ..query import GraphqlQueryService
 from ..query.graphql import GraphqlSchemaLoader
-from .memory_factory import MemoryFactory
+from .rest_factory import RestFactory
 
 
-class GraphqlFactory(MemoryFactory):
+class GraphqlFactory(RestFactory):
     def __init__(self, config: Config) -> None:
         self.config = config
 
