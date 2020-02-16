@@ -1,6 +1,6 @@
 import rapidjson as json
 from typing import Dict, Any
-from integrark.infrastructure.query import (
+from integrark.infrastructure.core import (
     camel_to_snake,
     snake_to_camel,
     normalize,

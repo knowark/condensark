@@ -5,9 +5,7 @@
 from ..infrastructure.core import (
     Solution,
     Location,
-    DataLoader
-)
-from ..infrastructure.query.utilities import (
+    DataLoader,
     Authorizer,
     normalize,
     normalize_domain

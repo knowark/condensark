@@ -1,6 +1,6 @@
 import rapidjson as json
 from pytest import fixture, raises
-from integrark.infrastructure.query import parse_domain, join_domains
+from integrark.infrastructure.core import parse_domain, join_domains
 
 
 def test_parse_domain():
