@@ -3,6 +3,7 @@ from aiohttp import web
 from aiohttp_jinja2 import template
 from .... import __version__
 from .graphql import GraphqlResource
+from .rest import RestResource
 
 
 class RootResource:

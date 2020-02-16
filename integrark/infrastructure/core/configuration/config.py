@@ -15,8 +15,14 @@ class Config(defaultdict, ABC):
             "QueryService": {
                 "method": "standard_query_service"
             },
+            "RouteService": {
+                "method": "standard_route_service"
+            },
             "ExecutionCoordinator": {
                 "method": "execution_coordinator"
+            },
+            "RoutingCoordinator": {
+                "method": "routing_coordinator"
             },
             "JwtSupplier": {
                 "method": "jwt_supplier"

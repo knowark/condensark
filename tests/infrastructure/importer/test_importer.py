@@ -55,8 +55,6 @@ async def test_integration_importer_load(
 
     assert len(dataloaders)
     for name, loader in dataloaders.items():
-        print('name', name)
-        print('loader', loader)
         assert isinstance(loader, DataLoader)
         assert loader.context == Info.context
 

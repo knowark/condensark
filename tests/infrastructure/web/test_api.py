@@ -26,3 +26,28 @@ async def test_graphql_post(app) -> None:
 
     assert response.status == 200
     assert "{}" in await response.text()
+
+
+async def test_rest_get_root(app) -> None:
+    response = await app.get('/rest/upstream_location/')
+
+    content = await response.text()
+
+    assert response.status == 200
+
+
+async def test_rest_get_simple_upstream(app) -> None:
+    response = await app.get('/rest/upstream_location/upstream_path')
+
+    content = await response.text()
+
+    assert response.status == 200
+
+
+async def test_rest_get_complex_upstream(app) -> None:
+    response = await app.get(
+        '/rest/upstream_location/upstream_path/upstream_subpath')
+
+    content = await response.text()
+
+    assert response.status == 200
