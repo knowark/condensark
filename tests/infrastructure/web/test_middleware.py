@@ -10,6 +10,7 @@ async def test_user_middleware_default_user():
     class MockRequest(dict):
         def __init__(self):
             self.headers = {}
+            self.query = {}
 
     mock_request = MockRequest()
 
