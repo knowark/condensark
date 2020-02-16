@@ -22,7 +22,8 @@ class GraphqlResource:
             'graphql': {
                 'context_value': {
                     'injector': self.injector,
-                    'request': request
+                    'request': request,
+                    'user': request['user']
                 },
                 'variable_values': payload.get('variables'),
                 'operation_name': payload.get('operationName')
