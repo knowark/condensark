@@ -8,7 +8,7 @@ def create_api(app: web.Application, injector: Injectark) -> None:
     bind_routes(app, '/', RootResource())
     bind_routes(app, '/graphql', GraphqlResource(injector))
     bind_routes(
-        app, r'/rest/{location:[^{}/]+}/{path:(.*)}',
+        app, r'/rest/{location:[^{}/]+}/{_:(.*)}',
         RestResource(injector), 'route')
 
 

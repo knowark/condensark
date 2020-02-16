@@ -51,3 +51,12 @@ async def test_rest_get_complex_upstream(app) -> None:
     content = await response.text()
 
     assert response.status == 200
+
+
+async def test_rest_get_complex_upstream_with_params(app) -> None:
+    response = await app.get(
+        '/rest/upstream_location/upstream_path/upstream_subpath?key=value')
+
+    content = await response.text()
+
+    assert response.status == 200

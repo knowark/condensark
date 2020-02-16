@@ -13,14 +13,14 @@ class RestResource:
 
     async def route(self, request: web.Request):
         location = request.match_info['location']
-        path = request.match_info['path']
+        path = request.path_qs.replace(f'/rest/{location}', '')
 
         context = {
             'method': request.method,
             'url': request.url,
             'request': request,
             'location': location,
-            'path': path
+            'path': path,
         }
 
         result = await self.routing_coordinator.route(location, context)
