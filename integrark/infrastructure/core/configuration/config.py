@@ -68,6 +68,9 @@ class ProductionConfig(Config):
             "QueryService": {
                 "method": "graphql_query_service"
             },
+            "RouteService": {
+                "method": "rest_route_service"
+            },
             "GraphqlSchemaLoader": {
                 "method": "graphql_schema_loader"
             },
