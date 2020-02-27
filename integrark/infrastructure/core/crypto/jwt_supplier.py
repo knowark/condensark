@@ -1,5 +1,5 @@
 import json
-import jwt
+from jwt import decode, InvalidTokenError
 
 
 class JwtSupplier:
@@ -11,5 +11,8 @@ class JwtSupplier:
 
     def decode(self, token: str, secret=None, verify=True):
         secret = secret or self.secret
-        return jwt.decode(token, secret, verify=verify,
-                          algorithms=['HS256'])
+        try:
+            return decode(
+                token, secret, verify=verify, algorithms=['HS256'])
+        except InvalidTokenError:
+            return None
