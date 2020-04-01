@@ -164,6 +164,12 @@ def test_camel_normalize_primitives():
     ]
 
 
+def test_camel_normalize_none():
+    camel_data = normalize(None)
+
+    assert camel_data is None
+
+
 def test_normalize_domain_default_snake_case():
     filter = ('[["id", "=", "001"], ["siteId", "=", "003"], '
               '["mainPhone", "=", "123456"]]')

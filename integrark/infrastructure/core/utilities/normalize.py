@@ -9,7 +9,7 @@ DATA_TYPE = Union[
 
 
 def normalize(data: DATA_TYPE, format='camel') -> DATA_TYPE:
-    if isinstance(data, (str, int, float, bool)):
+    if isinstance(data, (str, int, float, bool, type(None))):
         return data
 
     if isinstance(data, (list, tuple)):
