@@ -1,0 +1,8 @@
+---
+- name: Deploy Integrark Server
+  hosts: all
+  vars:
+    app_user: integrark
+  roles:
+    - system
+    - app

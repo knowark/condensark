@@ -1,0 +1,6 @@
+[Unit]
+Description={{ app_user }} Workers
+Requires={{ app_user }}@{{ port }}.service {{ app_user }}@{{ port_2 }}.service 
+
+[Install]
+WantedBy=multi-user.target
