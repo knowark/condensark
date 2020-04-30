@@ -22,6 +22,9 @@ coverage:
 serve:
 	python -m $(PROJECT) serve
 
+deploy:
+	./setup/deploy.sh
+
 PART ?= patch
 
 version:

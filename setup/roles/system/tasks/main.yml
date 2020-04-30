@@ -26,15 +26,3 @@
   apt:
     pkg: nginx
     state: latest
-
-- name: "Install PostgreSQL {{ postgresql_version }}"
-  apt:
-    name: "postgresql-{{ postgresql_version }}"
-    state: present
-    update_cache: yes
-
-- name: "Install PostgreSQL Server Dev {{ postgresql_version }}"
-  apt:
-    name: "postgresql-server-dev-10"
-    state: present
-    update_cache: yes
