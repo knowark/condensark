@@ -60,6 +60,15 @@
     group: "{{ app_user }}"
     mode: 0644
 
+- name: "Copy {{ app_user }}'s Apiconfig.json File "
+  become: yes
+  template:
+    src: apiconfig.json.j2
+    dest: "{{ app_apiconfig_path }}"
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+    mode: 0644
+
 - name:  "Create Cron Job {{ app_user }}"
   cron: 
     name: "{{ app_user }} deploy updates with Cron Job"
