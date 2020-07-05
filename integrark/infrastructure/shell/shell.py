@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()
 
 
-class Cli:
+class Shell:
     def __init__(self, config: Config, injector: Injectark) -> None:
         self.config = config
         self.injector = injector

@@ -2,11 +2,11 @@ from pytest import fixture
 from injectark import Injectark
 from integrark.infrastructure.core import Config, TrialConfig
 from integrark.infrastructure.factories import build_factory
-from integrark.infrastructure.cli import Cli
+from integrark.infrastructure.shell import Shell
 
 
 @fixture
-def cli() -> Cli:
+def shell() -> Shell:
     """Create app testing client"""
     config = TrialConfig()
     strategy = config['strategy']
@@ -14,4 +14,4 @@ def cli() -> Cli:
 
     resolver = Injectark(strategy, factory)
 
-    return Cli(config, resolver)
+    return Shell(config, resolver)

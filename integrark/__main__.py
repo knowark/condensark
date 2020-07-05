@@ -5,7 +5,7 @@ import uvloop
 from injectark import Injectark
 from .infrastructure.core import build_config
 from .infrastructure.factories import build_factory
-from .infrastructure.cli import Cli
+from .infrastructure.shell import Shell
 
 
 async def main(args=None):  # pragma: no cover
@@ -18,7 +18,7 @@ async def main(args=None):  # pragma: no cover
 
     resolver = Injectark(strategy=strategy, factory=factory)
 
-    await Cli(config, resolver).run(args or [])
+    await Shell(config, resolver).run(args or [])
 
 
 if __name__ == '__main__':  # pragma: no cover

@@ -3,37 +3,37 @@ from typing import List
 from unittest.mock import AsyncMock
 from argparse import ArgumentParser, Namespace
 from pytest import raises
-from integrark.infrastructure.cli import Cli
-from integrark.infrastructure.cli import cli as cli_module
+from integrark.infrastructure.shell import Shell
+from integrark.infrastructure.shell import shell as shell_module
 
 
-def test_cli_instantiation(cli):
-    assert cli is not None
+def test_shell_instantiation(shell):
+    assert shell is not None
 
 
-async def test_cli_run(cli):
+async def test_shell_run(shell):
     mock_parse = AsyncMock()
-    cli.parse = mock_parse
+    shell.parse = mock_parse
     argv: List = []
-    await cli.run(argv)
+    await shell.run(argv)
 
     assert mock_parse.call_count == 1
 
 
-async def test_cli_parse(cli):
+async def test_shell_parse(shell):
     called = False
     argv = ['serve']
-    result = await cli.parse(argv)
+    result = await shell.parse(argv)
 
     assert result is not None
 
 
-async def test_cli_parse_empty_argv(cli):
+async def test_shell_parse_empty_argv(shell):
     with raises(SystemExit) as e:
-        result = await cli.parse([])
+        result = await shell.parse([])
 
 
-async def test_cli_serve(cli, monkeypatch):
+async def test_shell_serve(shell, monkeypatch):
     called = False
     application = None
     port = None
@@ -44,7 +44,7 @@ async def test_cli_serve(cli, monkeypatch):
         return {'Application': 'app'}
 
     monkeypatch.setattr(
-        cli_module, 'create_app', mock_create_app)
+        shell_module, 'create_app', mock_create_app)
 
     async def mock_run_app(app, port_):
         nonlocal called
@@ -55,11 +55,11 @@ async def test_cli_serve(cli, monkeypatch):
         application = app
 
     monkeypatch.setattr(
-        cli_module, 'run_app', mock_run_app)
+        shell_module, 'run_app', mock_run_app)
 
     namespace.port = 7777
 
-    result = await cli.serve(namespace)
+    result = await shell.serve(namespace)
 
     assert called
     assert application == {'Application': 'app'}
