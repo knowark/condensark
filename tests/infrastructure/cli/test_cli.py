@@ -1,6 +1,6 @@
 import contextlib
 from typing import List
-from asyncmock import AsyncMock
+from unittest.mock import AsyncMock
 from argparse import ArgumentParser, Namespace
 from pytest import raises
 from integrark.infrastructure.cli import Cli

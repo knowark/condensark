@@ -23,6 +23,4 @@ async def main(args=None):  # pragma: no cover
 
 if __name__ == '__main__':  # pragma: no cover
     uvloop.install()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main(sys.argv[1:]))
-    loop.close()
+    asyncio.run(main(sys.argv[1:]))
