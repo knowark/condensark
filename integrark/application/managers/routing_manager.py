@@ -2,7 +2,7 @@ from typing import Dict, Any
 from ..services import RouteService
 
 
-class RoutingCoordinator:
+class RoutingManager:
     def __init__(self, route_service: RouteService) -> None:
         self.route_service = route_service
 

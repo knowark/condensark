@@ -18,11 +18,11 @@ class Config(defaultdict, ABC):
             "RouteService": {
                 "method": "standard_route_service"
             },
-            "ExecutionCoordinator": {
-                "method": "execution_coordinator"
+            "ExecutionManager": {
+                "method": "execution_manager"
             },
-            "RoutingCoordinator": {
-                "method": "routing_coordinator"
+            "RoutingManager": {
+                "method": "routing_manager"
             },
             "JwtSupplier": {
                 "method": "jwt_supplier"

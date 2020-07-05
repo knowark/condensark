@@ -2,7 +2,7 @@ from typing import Dict, Any
 from ..services import QueryService, QueryResult
 
 
-class ExecutionCoordinator:
+class ExecutionManager:
     def __init__(self, query_service: QueryService) -> None:
         self.query_service = query_service
 

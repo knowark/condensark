@@ -2,8 +2,8 @@ from pathlib import Path
 from ...application.services import (
     QueryService, StandardQueryService,
     RouteService, StandardRouteService)
-from ...application.coordinators import (
-    ExecutionCoordinator, RoutingCoordinator)
+from ...application.managers import (
+    ExecutionManager, RoutingManager)
 from ..core import Config, JwtSupplier, IntegrationImporter
 from .factory import Factory
 
@@ -18,13 +18,13 @@ class MemoryFactory(Factory):
     def standard_route_service(self) -> StandardRouteService:
         return StandardRouteService()
 
-    def execution_coordinator(
-            self, query_service: QueryService) -> ExecutionCoordinator:
-        return ExecutionCoordinator(query_service)
+    def execution_manager(
+            self, query_service: QueryService) -> ExecutionManager:
+        return ExecutionManager(query_service)
 
-    def routing_coordinator(
-            self, route_service: RouteService) -> RoutingCoordinator:
-        return RoutingCoordinator(route_service)
+    def routing_manager(
+            self, route_service: RouteService) -> RoutingManager:
+        return RoutingManager(route_service)
 
     def jwt_supplier(self) -> JwtSupplier:
         secret_file = Path(self.config.get('secrets', {}).get('jwt', ''))
