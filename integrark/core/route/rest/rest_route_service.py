@@ -1,6 +1,6 @@
 from typing import List, Dict, Any
-from ...application.services import RouteService
-from ...core import IntegrationImporter, Location
+from ....application.services import RouteService
+from ....core import IntegrationImporter, Location
 
 
 class RestRouteService(RouteService):

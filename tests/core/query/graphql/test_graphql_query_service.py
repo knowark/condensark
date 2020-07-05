@@ -2,6 +2,7 @@ from pytest import fixture
 from graphql import build_schema, graphql
 from integrark.application.services import QueryService
 from integrark.core.query import GraphqlQueryService
+from integrark.core.importer.solution import Solution
 from integrark.core import IntegrationImporter
 from integrark.core.query.graphql import GraphqlSchemaLoader
 
@@ -30,7 +31,7 @@ def schema_loader() -> GraphqlSchemaLoader:
 
 @fixture
 def integration_importer() -> IntegrationImporter:
-    class MockSolution:
+    class MockSolution(Solution):
         type = 'Query'
 
         def resolve(self, field):

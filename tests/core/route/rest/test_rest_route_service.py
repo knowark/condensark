@@ -1,12 +1,13 @@
 from pytest import fixture, raises
 from integrark.application.services import RouteService
-from integrark.route import RestRouteService
+from integrark.core.importer.location import Location
+from integrark.core.route import RestRouteService
 from integrark.core import IntegrationImporter
 
 
 @fixture
 def integration_importer() -> IntegrationImporter:
-    class MockLocation:
+    class MockLocation(Location):
         path = 'media'
 
         async def route(self, context):

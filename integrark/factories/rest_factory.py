@@ -1,5 +1,5 @@
 from ..core import Config, IntegrationImporter
-from ..route import RestRouteService
+from ..core.route import RestRouteService
 from .memory_factory import MemoryFactory
 
 
