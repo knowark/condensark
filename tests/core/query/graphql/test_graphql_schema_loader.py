@@ -1,6 +1,6 @@
 from pathlib import Path
-from pytest import fixture, raises
-from integrark.query.graphql import GraphqlSchemaLoader
+from pytest import fixture
+from integrark.core.query.graphql import GraphqlSchemaLoader
 
 
 @fixture

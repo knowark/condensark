@@ -1,7 +1,7 @@
 from typing import List, Dict, Any
 from graphql import GraphQLSchema, graphql, format_error
-from ...application.services import QueryService, QueryResult
-from ...core import IntegrationImporter, Solution
+from ....application.services import QueryService, QueryResult
+from ...importer import IntegrationImporter, Solution
 from .graphql_schema_loader import GraphqlSchemaLoader
 
 

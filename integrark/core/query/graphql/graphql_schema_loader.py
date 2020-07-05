@@ -1,7 +1,6 @@
 from pathlib import Path
 from typing import List
 from graphql import GraphQLSchema, build_schema
-from graphql.error.syntax_error import GraphQLSyntaxError
 
 
 class GraphqlSchemaLoader:

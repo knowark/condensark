@@ -1,9 +1,9 @@
-from pytest import fixture, raises
-from graphql import GraphQLSchema, build_schema, graphql
+from pytest import fixture
+from graphql import build_schema, graphql
 from integrark.application.services import QueryService
-from integrark.query import GraphqlQueryService
+from integrark.core.query import GraphqlQueryService
 from integrark.core import IntegrationImporter
-from integrark.query.graphql import GraphqlSchemaLoader
+from integrark.core.query.graphql import GraphqlSchemaLoader
 
 
 @fixture

@@ -1,6 +1,6 @@
 from ..core import Config, IntegrationImporter
-from ..query import GraphqlQueryService
-from ..query.graphql import GraphqlSchemaLoader
+from ..core.query import GraphqlQueryService
+from ..core.query.graphql import GraphqlSchemaLoader
 from .rest_factory import RestFactory
 
 
