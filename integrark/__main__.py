@@ -3,9 +3,9 @@ import sys
 import asyncio
 import uvloop
 from injectark import Injectark
-from .infrastructure.core import build_config
-from .infrastructure.factories import build_factory
-from .infrastructure.shell import Shell
+from .core import build_config
+from .factories import build_factory
+from .presenters.shell import Shell
 
 
 async def main(args=None):  # pragma: no cover

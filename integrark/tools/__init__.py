@@ -2,7 +2,7 @@
     This package exports tool classes to be used
     in external Solution packages.
 """
-from ..infrastructure.core import (
+from ..core import (
     Solution,
     Location,
     DataLoader,
