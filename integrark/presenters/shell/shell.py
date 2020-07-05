@@ -5,7 +5,7 @@ from argparse import ArgumentParser, Namespace
 from injectark import Injectark
 from typing import List
 from ...core import Config
-from ..web import create_app, run_app
+from ..rest import create_app, run_app
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger()

@@ -1,6 +1,5 @@
 from pytest import fixture
-from aiohttp import web
-from integrark.presenters.web.middleware import user_middleware_factory
+from integrark.presenters.rest.middleware import user_middleware_factory
 from integrark.core import JwtSupplier
 
 

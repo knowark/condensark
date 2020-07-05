@@ -2,8 +2,8 @@ from aiohttp import web
 from injectark import Injectark
 from integrark.core import build_config
 from integrark.factories import build_factory
-from integrark.presenters.web import create_app, run_app
-from integrark.presenters.web import base as base_module
+from integrark.presenters.rest import create_app, run_app
+from integrark.presenters.rest import base as base_module
 
 
 def test_create_app():

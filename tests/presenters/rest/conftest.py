@@ -3,7 +3,7 @@ from aiohttp import web
 from injectark import Injectark
 from integrark.core import build_config
 from integrark.factories import build_factory
-from integrark.presenters.web import create_app
+from integrark.presenters.rest import create_app
 
 
 @fixture
