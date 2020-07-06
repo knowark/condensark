@@ -8,7 +8,7 @@ from ...core import Config
 from ..rest import create_app, run_app
 
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
 class Shell:

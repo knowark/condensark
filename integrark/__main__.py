@@ -1,6 +1,7 @@
 import os
 import sys
 import asyncio
+import logging
 import uvloop
 from injectark import Injectark
 from .core import build_config
@@ -8,10 +9,14 @@ from .factories import build_factory
 from .presenters.shell import Shell
 
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+
 async def main(args=None):  # pragma: no cover
-    mode = os.environ.get('INTEGRARK_MODE', 'PROD')
     config_path = os.environ.get('INTEGRARK_CONFIG', 'config.json')
-    config = build_config(config_path, mode)
+    logger.info(f'Configuration: {config_path}')
+    config = build_config(config_path, 'PROD')
 
     factory = build_factory(config)
     strategy = config['strategy']
