@@ -71,7 +71,7 @@
     dest: "{{ app_configuration_path }}"
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
-    mode: 0644
+    mode: 0775
 
 - name: "Copy {{ app_user }}'s Apiconfig.json File "
   become: yes
@@ -80,7 +80,7 @@
     dest: "{{ app_apiconfig_path }}"
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
-    mode: 0644
+    mode: 0775
 
 - name:  "Create Cron Job {{ app_user }}"
   cron:
