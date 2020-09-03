@@ -20,7 +20,6 @@ def test_factories():
         injector = Injectark(strategy=strategy, factory=factory)
 
         for resource in strategy.keys():
-            print('Resource>>>', factory_name, resource)
             result = injector.resolve(resource)
             classes = inspect.getmro(type(result))
             assert resource in [item.__name__ for item in classes]
