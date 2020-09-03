@@ -47,12 +47,13 @@
     mode: 0775
 
 - name: "Symlink {{ app_user }} Repository"
+  become: yes
+  become_user: "{{ app_user }}"
   file:
     src: "/var/git/{{ app_user }}"
     dest: "{{ app_repository }}"
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
-    recurse: yes
     state: link
 
 - name: "Create {{ app_user }} Virtualenv and Install Packages"
