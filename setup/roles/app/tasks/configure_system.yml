@@ -37,6 +37,14 @@
     group: "{{ app_user }}"
     mode: 0775
 
+- name: Change Repository Permissions
+  file:
+    path: "/var/git/{{ app_user }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
+    mode: 0775
+
 - name: "Symlink {{ app_user }} Repository"
   file:
     src: "/var/git/{{ app_user }}"
@@ -70,7 +78,7 @@
     mode: 0644
 
 - name:  "Create Cron Job {{ app_user }}"
-  cron: 
+  cron:
     name: "{{ app_user }} deploy updates with Cron Job"
     user: "root"
     hour: "*"
