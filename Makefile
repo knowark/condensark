@@ -26,7 +26,7 @@ serve:
 	python -m $(PROJECT) serve
 
 deploy:
-	./setup/deploy.sh
+	./setup/local.sh
 
 PART ?= patch
 
