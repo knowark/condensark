@@ -1,20 +1,22 @@
 from pytest import fixture
 from aiohttp import web
 from injectark import Injectark
-from integrark.core import build_config
-from integrark.factories import build_factory
+from integrark.core import config
+from integrark.factories import strategy_builder, factory_builder
 from integrark.presenters.rest import create_app
 
 
 @fixture
 def app(loop, aiohttp_client):
     """Create app testing client"""
-    config = build_config('', 'TEST')
-    strategy = config['strategy']
-    factory = build_factory(config)
+    config['factory'] = 'CheckFactory'
+    config['strategies'] = ['base', 'check']
 
-    resolver = Injectark(strategy, factory)
+    strategy = strategy_builder.build(config['strategies'])
+    factory = factory_builder.build(config)
 
-    app = create_app(config, resolver)
+    injector = Injectark(strategy, factory)
+
+    app = create_app(config, injector)
 
     return loop.run_until_complete(aiohttp_client(app))

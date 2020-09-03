@@ -1,14 +1,14 @@
 from pathlib import Path
+from injectark import Factory
 from ..application.services import (
     QueryService, StandardQueryService,
     RouteService, StandardRouteService)
 from ..application.managers import (
     ExecutionManager, RoutingManager)
 from ..core import Config, JwtSupplier, IntegrationImporter
-from .factory import Factory
 
 
-class MemoryFactory(Factory):
+class BaseFactory(Factory):
     def __init__(self, config: Config) -> None:
         self.config = config
 

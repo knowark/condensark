@@ -1,8 +1,7 @@
 from pytest import fixture, raises
 from integrark.application.services import RouteService
-from integrark.core.importer.location import Location
+from integrark.core.common import Location, IntegrationImporter
 from integrark.core.route import RestRouteService
-from integrark.core import IntegrationImporter
 
 
 @fixture

@@ -1,9 +1,9 @@
 from ..core import Config, IntegrationImporter
 from ..core.route import RestRouteService
-from .memory_factory import MemoryFactory
+from .base_factory import BaseFactory
 
 
-class RestFactory(MemoryFactory):
+class RestFactory(BaseFactory):
     def __init__(self, config: Config) -> None:
         self.config = config
 

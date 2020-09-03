@@ -14,5 +14,5 @@ class GraphqlFactory(RestFactory):
         return GraphqlQueryService(schema_loader, integration_importer)
 
     def graphql_schema_loader(self) -> GraphqlSchemaLoader:
-        definitions_directory = self.config['schema_definitions_directory']
+        definitions_directory = self.config['definitions_directory']
         return GraphqlSchemaLoader(definitions_directory)

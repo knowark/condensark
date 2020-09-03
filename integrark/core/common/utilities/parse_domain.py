@@ -1,4 +1,4 @@
-import rapidjson as json
+import json
 from typing import List, Dict, Any
 from .format import camel_to_snake, snake_to_camel
 

@@ -1,4 +1,4 @@
-import rapidjson as json
+import json
 from typing import Dict, Any
 from integrark.core import (
     camel_to_snake,

@@ -1,17 +1,19 @@
 from pytest import fixture
 from injectark import Injectark
-from integrark.core import Config, TrialConfig
-from integrark.factories import build_factory
+from integrark.core import config
+from integrark.factories import strategy_builder, factory_builder
 from integrark.presenters.shell import Shell
 
 
 @fixture
 def shell() -> Shell:
     """Create app testing client"""
-    config = TrialConfig()
-    strategy = config['strategy']
-    factory = build_factory(config)
+    config['factory'] = 'CheckFactory'
+    config['strategies'] = ['base', 'check']
 
-    resolver = Injectark(strategy, factory)
+    strategy = strategy_builder.build(config['strategies'])
+    factory = factory_builder.build(config)
 
-    return Shell(config, resolver)
+    injector = Injectark(strategy, factory)
+
+    return Shell(config, injector)

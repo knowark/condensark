@@ -1,15 +1,17 @@
 from aiohttp import web
 from injectark import Injectark
-from integrark.core import build_config
-from integrark.factories import build_factory
+from integrark.core import config
+from integrark.factories import factory_builder, strategy_builder
 from integrark.presenters.rest import create_app, run_app
 from integrark.presenters.rest import base as base_module
 
 
 def test_create_app():
-    config = build_config('', 'TEST')
-    strategy = config['strategy']
-    factory = build_factory(config)
+    config['factory'] = 'CheckFactory'
+    config['strategies'] = ['base', 'check']
+
+    strategy = strategy_builder.build(config['strategies'])
+    factory = factory_builder.build(config)
 
     injector = Injectark(strategy, factory)
 

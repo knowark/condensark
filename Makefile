@@ -8,6 +8,9 @@ test:
 
 PROJECT = integrark
 
+mypy:
+	mypy $(PROJECT)
+
 coverage-application: 
 	pytest -x --cov=$(PROJECT)/application tests/application/ \
 	--cov-report term-missing -s

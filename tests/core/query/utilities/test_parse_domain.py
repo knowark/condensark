@@ -1,4 +1,4 @@
-import rapidjson as json
+import json
 from pytest import fixture, raises
 from integrark.core import parse_domain, join_domains
 

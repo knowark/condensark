@@ -1,7 +1,7 @@
 from ..core import Config
-from .memory_factory import MemoryFactory
+from .base_factory import BaseFactory
 
 
-class TrialFactory(MemoryFactory):
+class CheckFactory(BaseFactory):
     def __init__(self, config: Config) -> None:
         self.config = config

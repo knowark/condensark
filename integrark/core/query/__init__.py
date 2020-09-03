@@ -1,1 +1,1 @@
-from .graphql import GraphqlQueryService
+from .graphql import *
