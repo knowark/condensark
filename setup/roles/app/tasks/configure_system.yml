@@ -51,6 +51,8 @@
     src: "/var/git/{{ app_user }}"
     dest: "{{ app_repository }}"
     state: link
+    owner: "{{ app_user }}"
+    group: "{{ app_user }}"
 
 - name: "Create {{ app_user }} Virtualenv and Install Packages"
   become: yes
