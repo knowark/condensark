@@ -43,6 +43,7 @@
     state: directory
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
+    recurse: yes
     mode: 0775
 
 - name: "Symlink {{ app_user }} Repository"
