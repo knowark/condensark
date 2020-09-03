@@ -11,21 +11,24 @@ PROJECT = integrark
 mypy:
 	mypy $(PROJECT)
 
-coverage-application: 
+coverage-application:
 	pytest -x --cov=$(PROJECT)/application tests/application/ \
 	--cov-report term-missing -s
 
-coverage-infrastructure: 
+coverage-infrastructure:
 	pytest -x --cov=$(PROJECT)/infrastructure tests/infrastructure/ \
 	--cov-report term-missing -s
 
-coverage: 
+coverage:
 	pytest -x --cov=$(PROJECT) tests/ --cov-report term-missing -s -vv
 
 serve:
 	python -m $(PROJECT) serve
 
 deploy:
+	ansible-playbook -c local -i localhost, setup/deploy.yml
+
+local:
 	./setup/local.sh
 
 PART ?= patch
