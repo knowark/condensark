@@ -50,9 +50,10 @@
   file:
     src: "/var/git/{{ app_user }}"
     dest: "{{ app_repository }}"
-    state: link
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
+    recurse: yes
+    state: link
 
 - name: "Create {{ app_user }} Virtualenv and Install Packages"
   become: yes
