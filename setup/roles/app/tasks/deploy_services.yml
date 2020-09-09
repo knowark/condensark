@@ -10,6 +10,12 @@
     dest: "{{ service_path }}/{{ app_user }}.target"
     mode: 0775
 
+- name: "Deploy Environment Variables Empty File"
+  template:
+    src: integrark.sh.j2
+    dest: "/etc/profile.d/{{ app_user }}.sh"
+    mode: 0644
+
 #Start Services
 
 - name: "Restart {{ app_user }} Service"

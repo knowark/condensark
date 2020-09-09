@@ -45,6 +45,7 @@
     group: "{{ app_user }}"
     recurse: yes
     mode: 0775
+  ignore_errors: true
 
 - name: "Symlink {{ app_user }} Repository"
   become: yes
@@ -55,14 +56,14 @@
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
     state: link
+  ignore_errors: true
 
-- name: "Create {{ app_user }} Virtualenv and Install Packages"
+- name: "Install Requirements Inside Virtualenv"
   become: yes
   become_user: "{{ app_user }}"
   pip:
     requirements: "{{ app_requirements_path }}"
     virtualenv: "{{ app_env }}"
-    virtualenv_python: "python3"
 
 - name: "Copy {{ app_user }}'s Config File "
   become: yes

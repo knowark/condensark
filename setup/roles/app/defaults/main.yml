@@ -5,7 +5,7 @@ app_user: "{{ app_user }}"
 app_home: /opt/{{ app_user }}
 
 # Directories
-#
+
 app_port: 7417
 
 app_configuration_directory: /etc/opt/{{ app_user }}
