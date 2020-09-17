@@ -1,11 +1,13 @@
 aiohttp==3.6.2
 aiohttp-cors==0.7.0
 aiohttp-jinja2==1.2.0
+aiomcache==0.6.0
 async-timeout==3.0.1
 attrs==20.1.0
 bump2version==1.0.0
 chardet==3.0.4
 coverage==5.2.1
+filtrark==0.9.3
 graphql-core==3.1.2
 idna==2.10
 iniconfig==1.0.1
