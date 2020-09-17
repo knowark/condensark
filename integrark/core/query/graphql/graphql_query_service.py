@@ -1,3 +1,4 @@
+import logging
 from typing import List, Dict, Any
 from graphql import GraphQLSchema, graphql, format_error
 from ....application.services import QueryService, QueryResult
@@ -13,6 +14,7 @@ class GraphqlQueryService(QueryService):
         self.solutions = integration_importer.solutions
         self.dataloaders_factory = integration_importer.dataloaders_factory
         self.schema = self._bind_schema(self.schema, self.solutions)
+        self.logger = logging.getLogger(__name__)
 
     async def run(self, query: str,
                   context: Dict[str, Any] = None) -> QueryResult:
@@ -26,10 +28,12 @@ class GraphqlQueryService(QueryService):
         graphql_result = await graphql(self.schema, query, **graphql_kwargs)
 
         data = graphql_result.data
-        errors = graphql_result.errors if graphql_result.errors is None else [
-            format_error(error) for error in graphql_result.errors]
+        errors = []
+        for error in graphql_result.errors or []:
+            self.logger.error(error, exc_info=error)
+            errors.append(format_error(error))
 
-        return QueryResult(data, errors)
+        return QueryResult(data, errors or None)
 
     def _bind_schema(self, schema: GraphQLSchema,
                      solutions: List[Solution]) -> GraphQLSchema:
