@@ -16,7 +16,7 @@ lxc exec $CONTAINER -- apt update -y
 lxc exec $CONTAINER -- apt install ansible -y
 lxc exec $CONTAINER -- apt autoremove -y
 
-echo "Deploy with Ansible Pull..."
+echo "Deploy with Ansible..."
 
 lxc exec $CONTAINER -- mkdir /var/git
 lxc exec $CONTAINER -- ln -s /mnt/$REPOSITORY_PATH /var/git/$CONTAINER

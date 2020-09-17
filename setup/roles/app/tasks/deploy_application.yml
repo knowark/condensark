@@ -1,3 +1,9 @@
+- name: Install Memcached
+  apt:
+    name:
+        - memcached
+        - libmemcached-tools
+
 - name: Create Application User
   user:
     name: "{{ app_user }}"
