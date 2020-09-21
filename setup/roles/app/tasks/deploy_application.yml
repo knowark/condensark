@@ -71,15 +71,6 @@
     requirements: "{{ app_requirements_path }}"
     virtualenv: "{{ app_env }}"
 
-- name: "Copy {{ app_user }}'s Config File "
-  become: yes
-  template:
-    src: config.j2
-    dest: "{{ app_configuration_path }}"
-    owner: "{{ app_user }}"
-    group: "{{ app_user }}"
-    mode: 0775
-
 - name: "Copy {{ app_user }}'s Apiconfig.json File "
   become: yes
   template:
@@ -88,6 +79,7 @@
     owner: "{{ app_user }}"
     group: "{{ app_user }}"
     mode: 0775
+    force: no
 
 - name:  "Create Cron Job {{ app_user }}"
   cron:

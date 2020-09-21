@@ -15,8 +15,7 @@
     src: integrark.sh.j2
     dest: "/etc/profile.d/{{ app_user }}.sh"
     mode: 0644
-
-#Start Services
+    force: no
 
 - name: "Restart {{ app_user }} Service"
   systemd:
