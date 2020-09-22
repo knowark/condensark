@@ -9,7 +9,7 @@ class GraphqlSchemaLoader:
         self.extensions = ['gql', 'graphql']
 
     def load(self) -> GraphQLSchema:
-        content = self._get_builtin_directives()
+        content = ""
         path = Path(self.directory)
         if not path.exists():
             return content
@@ -27,13 +27,6 @@ class GraphqlSchemaLoader:
             schema = build_schema(content)
 
         return schema
-
-    def _get_builtin_directives(self):
-        return """
-
-        directive @auth(roles: [String]) on FIELD_DEFINITION | FIELD
-
-        """
 
     def _join_graphql_files(self, graphql_files: List[Path]) -> str:
         joined_content = ""

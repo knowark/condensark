@@ -1,4 +1,5 @@
 import sys
+import logging
 import asyncio
 import uvloop
 from injectark import Injectark
@@ -8,6 +9,8 @@ from .core import config
 
 
 async def main(args=None):  # pragma: no cover
+    logging.basicConfig()
+    logging.getLogger().setLevel(config['loglevel'])
     strategy = strategy_builder.build(config['strategies'])
     factory = factory_builder.build(config)
     injector = Injectark(strategy=strategy, factory=factory)

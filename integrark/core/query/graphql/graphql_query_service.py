@@ -10,11 +10,11 @@ class GraphqlQueryService(QueryService):
 
     def __init__(self, schema_loader: GraphqlSchemaLoader,
                  integration_importer: IntegrationImporter) -> None:
+        self.logger = logging.getLogger(__name__)
         self.schema = schema_loader.load()
         self.solutions = integration_importer.solutions
         self.dataloaders_factory = integration_importer.dataloaders_factory
         self.schema = self._bind_schema(self.schema, self.solutions)
-        self.logger = logging.getLogger(__name__)
 
     async def run(self, query: str,
                   context: Dict[str, Any] = None) -> QueryResult:
@@ -39,6 +39,7 @@ class GraphqlQueryService(QueryService):
                      solutions: List[Solution]) -> GraphQLSchema:
 
         for solution in solutions:
+            self.logger.debug(f' Binding solution: {solution} ')
             fields = schema.get_type(solution.type).fields
             for name, field in fields.items():
                 field.resolve = solution.resolve(name)
