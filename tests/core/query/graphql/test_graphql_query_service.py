@@ -14,7 +14,7 @@ def schema_loader() -> GraphqlSchemaLoader:
             type Doctor {
                 name: String!
                 specialty: String!
-                age: Int @auth(roles: ["HR_MANAGER"])
+                age: Int
             }
 
             type Query {
