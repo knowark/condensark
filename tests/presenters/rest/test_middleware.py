@@ -47,12 +47,14 @@ def headers() -> dict:
             # {
             #     "tid": "001",
             #     "uid": "001",
+            #     "tenant": "Knowark",
             #     "name": "John Doe",
             #     "email": "john@doe.com"
             # }
             "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0aWQiOiIwMDEiLCJ1aWQiOi"
-            "IwMDEiLCJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5AZG9lLmNvbSJ9."
-            "y9UEPbviFHpH9H-1fv1kv3Sgf4UnKkiQ3B3BqihZpD4"
+            "IwMDEiLCJ0ZW5hbnQiOiJLbm93YXJrIiwibmFtZSI6IkpvaG4gRG9lIiwiZW1ha"
+            "WwiOiJqb2huQGRvZS5jb20ifQ.udlkUWVOatst5IoDRlJsQVn"
+            "U_atCAltOelOJvRCr8BY"
         )
     }
 
@@ -81,6 +83,7 @@ async def test_user_middleware_authorization_token_user(headers):
     assert user == {
         "tid": "001",
         "uid": "001",
+        "tenant": "Knowark",
         "name": "John Doe",
         "email": "john@doe.com",
         'attributes': {},
