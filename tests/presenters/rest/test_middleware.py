@@ -28,6 +28,7 @@ async def test_user_middleware_default_user():
     assert user == {
         'tid': '',
         'uid': '',
+        'tenant': '',
         'name': '<<PUBLIC>>',
         'email': '',
         'attributes': {},
