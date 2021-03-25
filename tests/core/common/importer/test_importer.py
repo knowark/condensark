@@ -38,6 +38,9 @@ async def test_integration_importer_load(
     media_location = next(location for location in locations
                           if location.path == 'media')
 
+    auth_location = next(location for location in locations
+                         if location.path == 'auth')
+
     hero_resolver = query_solution.resolve('hero')
 
     name_resolver = droid_solution.resolve('name')
@@ -57,8 +60,10 @@ async def test_integration_importer_load(
     assert (await name_resolver(None, Info(), 1)) == 'R2-D2'
 
     assert (await media_location.route({'context': 'data'})) == (
-        "HTTP Response from 'media' with context {'context': 'data'}"
-    )
+        "HTTP Response from 'media' with context {'context': 'data'}")
+
+    assert (await auth_location.route({'context': 'data'})) == (
+        "HTTP Response from 'auth' with context {'context': 'data'}")
 
     assert len(dataloaders)
     for name, loader in dataloaders.items():

@@ -47,8 +47,8 @@ class IntegrationImporter:
 
     def _load_locations(self, package: ModuleType) -> List[Location]:
         return [
-            location_class() for location_class in
-            getattr(package, 'LOCATIONS', [])]
+            inspect.isclass(location) and location() or location
+            for location in getattr(package, 'LOCATIONS', [])]
 
     def _load_dataloaders_factory(
             self, package: ModuleType) -> Callable[[Any], Dict[str, Any]]:

@@ -1,7 +1,7 @@
 from .graphql.empty import *
 from .graphql.query import Solution, DroidSolution
 from .graphql.dataloaders import DroidLoader, EpisodeLoader
-from .rest.location import Location
+from .rest.location import Location, AuthLocation
 
 
 SOLUTIONS = [
@@ -15,5 +15,6 @@ DATALOADERS = [
 ]
 
 LOCATIONS = [
-    Location
+    Location,
+    AuthLocation()
 ]
