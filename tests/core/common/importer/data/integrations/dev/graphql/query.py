@@ -20,3 +20,13 @@ class Solution:
     async def resolve__droid(self, parent, info, id):
         self.droid_data = info.context['data']['droid_data']
         return self.droid_data.get(id)
+
+
+class DroidSolution:
+    type = 'Droid'
+
+    def resolve(self, field):
+        return getattr(self, f'resolve__{field}', None)
+
+    async def resolve__name(self, parent, info, episode):
+        return "R2-D2"
