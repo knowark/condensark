@@ -12,8 +12,8 @@
 
 - name: "Deploy Environment Variables Empty File"
   template:
-    src: integrark.sh.j2
-    dest: "/etc/profile.d/{{ app_user }}.sh"
+    src: integrark.j2
+    dest: "/etc/opt/{{ app_user }}/{{ app_user }}.env"
     mode: 0644
     force: no
 

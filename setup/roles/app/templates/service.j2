@@ -3,7 +3,7 @@ Description={{ app_user }} Service on port %i
 PartOf={{ app_user }}.target
 
 [Service]
-EnvironmentFile=/etc/profile.d/{{ app_user }}.sh
+EnvironmentFile=/etc/opt/{{ app_user }}/{{ app_user }}.env
 User={{ app_user }}
 Group={{ app_user }}
 WorkingDirectory=/opt/{{ app_user }}/{{ app_user }}
