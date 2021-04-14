@@ -1,6 +1,6 @@
 import logging
 from typing import List, Dict, Any
-from graphql import GraphQLSchema, graphql, format_error
+from graphql import GraphQLSchema, GraphQLObjectType, graphql, format_error
 from ....application.services import QueryService, QueryResult
 from ...common import IntegrationImporter, Solution
 from .graphql_schema_loader import GraphqlSchemaLoader
@@ -38,10 +38,18 @@ class GraphqlQueryService(QueryService):
     def _bind_schema(self, schema: GraphQLSchema,
                      solutions: List[Solution]) -> GraphQLSchema:
 
-        for solution in solutions:
-            self.logger.debug(f' Binding solution: {solution} ')
-            fields = schema.get_type(solution.type).fields
-            for name, field in fields.items():
-                field.resolve = solution.resolve(name)
+        solutions_map = {solution.type: solution for solution in solutions}
+        custom_types = [type_ for type_ in schema.to_kwargs()['types']
+                        if not type_.name.startswith('__')]
+
+        for type_ in custom_types:
+            if isinstance(type_, GraphQLObjectType):
+                solution = solutions_map[type_.name]
+                self.logger.debug(f' Binding solution: {solution} ')
+                solution_type = schema.get_type(solution.type)
+                assert solution_type
+                fields = getattr(solution_type, 'fields', [])
+                for name, field in fields.items():
+                    field.resolve = solution.resolve(name)
 
         return schema

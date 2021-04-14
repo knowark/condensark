@@ -11,8 +11,9 @@ class GraphqlSchemaLoader:
     def load(self) -> GraphQLSchema:
         content = ""
         path = Path(self.directory)
+
         if not path.exists():
-            return content
+            return GraphQLSchema()
 
         graphql_files: List[Path] = []
         for extension in self.extensions:
@@ -21,12 +22,7 @@ class GraphqlSchemaLoader:
 
         content += self._join_graphql_files(graphql_files)
 
-        schema = None
-
-        if content:
-            schema = build_schema(content)
-
-        return schema
+        return build_schema(content)
 
     def _join_graphql_files(self, graphql_files: List[Path]) -> str:
         joined_content = ""

@@ -9,12 +9,11 @@ from integrark.core.query import GraphqlQueryService, GraphqlSchemaLoader
 def schema_loader() -> GraphqlSchemaLoader:
     class MockGraphqlSchemaLoader(GraphqlSchemaLoader):
         def load(self):
-            content = super().load()
-            content += """
+            content = """
             type Doctor {
                 name: String!
                 specialty: String!
-                age: Int @auth(roles: ["HR_MANAGER"])
+                age: Int
             }
 
             type Query {
@@ -29,11 +28,8 @@ def schema_loader() -> GraphqlSchemaLoader:
 
 @fixture
 def integration_importer() -> IntegrationImporter:
-    class MockSolution(Solution):
+    class QuerySolution(Solution):
         type = 'Query'
-
-        def resolve(self, field):
-            return getattr(self, f'resolve__{field}', None)
 
         async def resolve__doctors(self, parent, info):
             return [
@@ -45,9 +41,15 @@ def integration_importer() -> IntegrationImporter:
         async def resolve__veterinary(self, parent, info):
             raise Exception('The veterinary field has not been implemented.')
 
+    class DoctorSolution(Solution):
+        type = 'Doctor'
+
     class MockIntegrationImporter(IntegrationImporter):
         def load(self):
-            self.solutions = [MockSolution()]
+            self.solutions = [
+                QuerySolution(),
+                DoctorSolution()
+            ]
             self.dataloaders_factory = lambda context: {}
 
     integration_importer = MockIntegrationImporter('/tmp/fake')
@@ -86,17 +88,18 @@ def students():
 
 @fixture
 def solutions(students):
-    class Solution:
-        type = 'Query'
+    class StudentSolution(Solution):
+        type = 'Student'
 
-        def resolve(self, field):
-            return getattr(self, f'resolve__{field}', None)
+    class QuerySolution(Solution):
+        type = 'Query'
 
         async def resolve__students(self, parent, info):
             return students
 
     return [
-        Solution()
+        QuerySolution(),
+        StudentSolution()
     ]
 
 

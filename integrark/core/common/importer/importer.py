@@ -1,4 +1,5 @@
 import sys
+import inspect
 from pathlib import Path
 from types import ModuleType
 from typing import List, Tuple, Dict, Callable, Any
@@ -41,13 +42,13 @@ class IntegrationImporter:
 
     def _load_solutions(self, package: ModuleType) -> List[Solution]:
         return [
-            solution_class() for solution_class in
-            getattr(package, 'SOLUTIONS', [])]
+            inspect.isclass(solution) and solution() or solution
+            for solution in getattr(package, 'SOLUTIONS', [])]
 
     def _load_locations(self, package: ModuleType) -> List[Location]:
         return [
-            location_class() for location_class in
-            getattr(package, 'LOCATIONS', [])]
+            inspect.isclass(location) and location() or location
+            for location in getattr(package, 'LOCATIONS', [])]
 
     def _load_dataloaders_factory(
             self, package: ModuleType) -> Callable[[Any], Dict[str, Any]]:

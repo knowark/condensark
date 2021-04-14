@@ -28,6 +28,7 @@ def extract_user(payload: Dict[str, Any]) -> Dict[str, Any]:
     user = {
         'tid': '',
         'uid': '',
+        'tenant': '',
         'name': '<<PUBLIC>>',
         'email': '',
         'attributes': {},

@@ -19,8 +19,12 @@ coverage-infrastructure:
 	pytest -x --cov=$(PROJECT)/infrastructure tests/infrastructure/ \
 	--cov-report term-missing -s
 
+COVFILE ?= /tmp/.coverage
+
 coverage:
-	pytest -x --cov=$(PROJECT) tests/ --cov-report term-missing -s -vv
+	export COVERAGE_FILE=$(COVFILE); pytest -x --cov=$(PROJECT) \
+	tests/ --cov-report term-missing -s -vv \
+	-o cache_dir=/tmp/integrark/cache
 
 serve:
 	python -m $(PROJECT) serve
