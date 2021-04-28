@@ -17,7 +17,6 @@ config: Config = {
     'integrations_directory': os.environ.get(
         'INTEGRARK_INTEGRATIONS_DIRECTORY', 'schema/integrations'),
     'secrets': {
-        'jwt': os.environ.get('INTEGRARK_SECRETS_JWT_FILE',
-                              str(Path.home().joinpath('sign.txt')))
+        'jwt': os.environ.get('INTEGRARK_TOKENS_SECRET', '')
     }
 }

@@ -27,10 +27,7 @@ class BaseFactory(Factory):
         return RoutingManager(route_service)
 
     def jwt_supplier(self) -> JwtSupplier:
-        secret_file = Path(self.config.get('secrets', {}).get('jwt', ''))
-        secret = (secret_file.read_text().strip()
-                  if secret_file.is_file() else 'INTEGRARK_SECRET')
-
+        secret = self.config.get('secrets', {}).get('jwt', '')
         return JwtSupplier(secret)
 
     def integration_importer(self) -> IntegrationImporter:
