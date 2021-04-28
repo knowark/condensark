@@ -1,3 +1,4 @@
+from ..application.services import QueryService, RouteService
 from ..core import Config, IntegrationImporter
 from ..core.query import GraphqlQueryService
 from ..core.query.graphql import GraphqlSchemaLoader
@@ -8,11 +9,8 @@ class GraphqlFactory(RestFactory):
     def __init__(self, config: Config) -> None:
         self.config = config
 
-    def graphql_query_service(
-            self, schema_loader: GraphqlSchemaLoader,
-            integration_importer: IntegrationImporter) -> GraphqlQueryService:
-        return GraphqlQueryService(schema_loader, integration_importer)
-
-    def graphql_schema_loader(self) -> GraphqlSchemaLoader:
+    def query_service(
+            self, integration_importer: IntegrationImporter) -> QueryService:
         definitions_directory = self.config['definitions_directory']
-        return GraphqlSchemaLoader(definitions_directory)
+        schema_loader = GraphqlSchemaLoader(definitions_directory)
+        return GraphqlQueryService(schema_loader, integration_importer)

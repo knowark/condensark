@@ -1,25 +1,33 @@
 import inspect
 from injectark import Injectark
 from integrark.core import config
-from integrark.factories import factory_builder, strategy_builder
+from integrark.factories import factory_builder
 
 
 test_tuples = [
-    ('BaseFactory', ['base']),
-    ('CheckFactory', ['base', 'check']),
-    ('GraphqlFactory', ['base', 'rest', 'graphql']),
-    ('RestFactory', ['base', 'rest']),
+    ('BaseFactory', [
+        ('QueryService', 'StandardQueryService'),
+        ('RouteService', 'StandardRouteService'),
+        ('ExecutionManager', 'ExecutionManager'),
+        ('RoutingManager', 'RoutingManager'),
+        ('JwtSupplier', 'JwtSupplier'),
+        ('IntegrationImporter', 'IntegrationImporter'),
+    ]),
+    ('GraphqlFactory', [
+        ('QueryService', 'GraphqlQueryService'),
+    ]),
+    ('RestFactory', [
+        ('RestRouteService', 'RestRouteService'),
+    ]),
 ]
 
 
 def test_factories():
-    for factory_name, strategy_names in test_tuples:
+    for factory_name, dependencies in test_tuples:
         factory = factory_builder.build(config, name=factory_name)
-        strategy = strategy_builder.build(strategy_names)
 
-        injector = Injectark(strategy=strategy, factory=factory)
+        injector = Injectark(factory=factory)
 
-        for resource in strategy.keys():
-            result = injector.resolve(resource)
-            classes = inspect.getmro(type(result))
-            assert resource in [item.__name__ for item in classes]
+        for abstract, concrete in dependencies:
+            result = injector.resolve(abstract)
+            assert type(result).__name__ == concrete

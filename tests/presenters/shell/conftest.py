@@ -1,7 +1,7 @@
 from pytest import fixture
 from injectark import Injectark
 from integrark.core import config
-from integrark.factories import strategy_builder, factory_builder
+from integrark.factories import factory_builder
 from integrark.presenters.shell import Shell
 
 
@@ -9,11 +9,9 @@ from integrark.presenters.shell import Shell
 def shell() -> Shell:
     """Create app testing client"""
     config['factory'] = 'CheckFactory'
-    config['strategies'] = ['base', 'check']
 
-    strategy = strategy_builder.build(config['strategies'])
     factory = factory_builder.build(config)
 
-    injector = Injectark(strategy, factory)
+    injector = Injectark(factory)
 
     return Shell(config, injector)

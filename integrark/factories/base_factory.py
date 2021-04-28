@@ -12,10 +12,11 @@ class BaseFactory(Factory):
     def __init__(self, config: Config) -> None:
         self.config = config
 
-    def standard_query_service(self) -> StandardQueryService:
+    def query_service(
+            self, integration_importer: IntegrationImporter) -> QueryService:
         return StandardQueryService()
 
-    def standard_route_service(self) -> StandardRouteService:
+    def route_service(self) -> RouteService:
         return StandardRouteService()
 
     def execution_manager(
