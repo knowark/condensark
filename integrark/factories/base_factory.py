@@ -16,7 +16,8 @@ class BaseFactory(Factory):
             self, integration_importer: IntegrationImporter) -> QueryService:
         return StandardQueryService()
 
-    def route_service(self) -> RouteService:
+    def route_service(
+            self, integration_importer: IntegrationImporter) -> RouteService:
         return StandardRouteService()
 
     def execution_manager(

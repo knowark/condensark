@@ -17,7 +17,7 @@ test_tuples = [
         ('QueryService', 'GraphqlQueryService'),
     ]),
     ('RestFactory', [
-        ('RestRouteService', 'RestRouteService'),
+        ('RouteService', 'RestRouteService'),
     ]),
 ]
 
