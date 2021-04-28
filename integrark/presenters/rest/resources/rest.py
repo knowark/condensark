@@ -26,5 +26,5 @@ class RestResource:
 
         result = await self.routing_manager.route(location, context)
 
-        return (isinstance(result, web.Response) and result
-                or web.Response(body=result))
+        return (result if isinstance(result, web.Response)
+                else web.Response(body=result))
