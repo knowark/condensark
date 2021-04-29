@@ -27,7 +27,7 @@ async def test_integration_importer_load(
 
     solutions = integration_importer.solutions
     locations = integration_importer.locations
-    dataloaders_factory = integration_importer.dataloaders_factory
+    # dataloaders_factory = integration_importer.dataloaders_factory
 
     query_solution = next(solution for solution in solutions
                           if solution.type == 'Query')
@@ -53,7 +53,7 @@ async def test_integration_importer_load(
             }
         }
 
-    dataloaders = dataloaders_factory(Info.context)
+    # dataloaders = dataloaders_factory(Info.context)
 
     assert (await hero_resolver(None, Info(), 1))['name'] == 'R2-D2'
 
@@ -65,10 +65,10 @@ async def test_integration_importer_load(
     assert (await auth_location.route({'context': 'data'})) == (
         "HTTP Response from 'auth' with context {'context': 'data'}")
 
-    assert len(dataloaders)
-    for name, loader in dataloaders.items():
-        assert isinstance(loader, DataLoader)
-        assert loader.context == Info.context
+    # assert len(dataloaders)
+    # for name, loader in dataloaders.items():
+        # assert isinstance(loader, DataLoader)
+        # assert loader.context == Info.context
 
 
 async def test_integration_importer_load_nonpackage(
@@ -81,4 +81,4 @@ async def test_integration_importer_load_nonpackage(
 
     assert integration_importer.solutions == []
     assert integration_importer.locations == []
-    assert integration_importer.dataloaders_factory({}) == {}
+    # assert integration_importer.dataloaders_factory({}) == {}

@@ -13,7 +13,6 @@ class GraphqlQueryService(QueryService):
         self.logger = logging.getLogger(__name__)
         self.schema = schema_loader.load()
         self.solutions = integration_importer.solutions
-        self.dataloaders_factory = integration_importer.dataloaders_factory
         self.schema = self._bind_schema(self.schema, self.solutions)
 
     async def run(self, query: str,
@@ -21,9 +20,7 @@ class GraphqlQueryService(QueryService):
         context = context or {}
         graphql_kwargs = context.pop('graphql', {'context_value': {}})
         graphql_context = graphql_kwargs['context_value']
-        graphql_context.update({
-            'dataloaders': self.dataloaders_factory(graphql_context)
-        })
+        graphql_context.update({'dataloaders': {}})
 
         graphql_result = await graphql(self.schema, query, **graphql_kwargs)
 
