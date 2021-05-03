@@ -19,6 +19,7 @@ class RestResource:
             'method': request.method,
             'url': request.url,
             'request': request,
+            'client': request.app['client'],
             'user': request['user'],
             'location': location,
             'path': path,
