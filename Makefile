@@ -26,6 +26,9 @@ coverage:
 	tests/ --cov-report term-missing -s -vv \
 	-o cache_dir=/tmp/integrark/cache
 
+push:
+	git push && git push --tags
+
 serve:
 	python -m $(PROJECT) serve
 
