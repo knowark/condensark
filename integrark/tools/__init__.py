@@ -8,6 +8,7 @@ from ..core import (
     DataLoader,
     StandardDataLoader,
     Joiner,
+    Enforcer,
     normalize,
     normalize_domain
 )
