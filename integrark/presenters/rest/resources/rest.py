@@ -13,7 +13,7 @@ class RestResource:
 
     async def route(self, request: web.Request):
         location = request.match_info['location']
-        path = request.path.replace(f'/rest/{location}', '')
+        path = request.path_qs.replace(f'/rest/{location}', '')
 
         context = {
             'method': request.method,
