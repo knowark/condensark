@@ -39,6 +39,8 @@ def errors_middleware_factory(injector: Injectark) -> Callable:
 
             logging.exception('Service Error')
 
+            print('Error>>', error)
+
             return web.json_response({"errors": [{
                 "type": type_,
                 "message": message,
