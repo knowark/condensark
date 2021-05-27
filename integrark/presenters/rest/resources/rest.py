@@ -13,18 +13,21 @@ class RestResource:
 
     async def route(self, request: web.Request):
         location = request.match_info['location']
-        path = request.path.replace(f'/rest/{location}', '')
+        path = request.path_qs.replace(f'/rest/{location}', '')
+        route = request.path.replace(f'/rest/{location}', '')
 
         context = {
             'method': request.method,
             'url': request.url,
             'request': request,
+            'client': request.app['client'],
             'user': request['user'],
             'location': location,
             'path': path,
+            'route': route
         }
 
         result = await self.routing_manager.route(location, context)
 
-        return (result if isinstance(result, web.Response)
+        return (result if isinstance(result, web.StreamResponse)
                 else web.Response(body=result))

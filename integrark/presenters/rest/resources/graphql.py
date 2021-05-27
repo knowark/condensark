@@ -23,6 +23,7 @@ class GraphqlResource:
                 'context_value': {
                     'injector': self.injector,
                     'request': request,
+                    'client': request.app['client'],
                     'user': request['user']
                 },
                 'variable_values': payload.get('variables'),

@@ -6,6 +6,9 @@ from ..core import (
     Solution,
     Location,
     DataLoader,
+    StandardDataLoader,
+    Joiner,
+    Enforcer,
     normalize,
     normalize_domain
 )

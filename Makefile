@@ -26,6 +26,9 @@ coverage:
 	tests/ --cov-report term-missing -s -vv \
 	-o cache_dir=/tmp/integrark/cache
 
+push:
+	git push && git push --tags
+
 serve:
 	python -m $(PROJECT) serve
 
@@ -39,3 +42,8 @@ PART ?= patch
 
 version:
 	bump2version $(PART) $(PROJECT)/__init__.py --tag --commit
+
+gitmessage:
+	touch .gitmessage
+	echo "\n# commit message\n.gitmessage" >> .gitignore
+	git config commit.template .gitmessage

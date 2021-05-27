@@ -110,3 +110,6 @@ venv.bak/
 schema/
 config.json
 sign.txt
+
+# commit message
+.gitmessage
